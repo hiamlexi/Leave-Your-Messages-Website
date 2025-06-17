@@ -24,7 +24,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-
       # run tests later (or maybe not if I decided not to tets it)
       #- name: ✅ Run tests
       #  run: npm test
