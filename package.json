@@ -1,13 +1,14 @@
 {
-  "name": "leave-your-messages-website",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": " npm --prefix client run dev",
-    "client": "npm --prefix client start",
-    "install-all": "npm --prefix client install"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  }
+    "name": "leave-your-messages-website",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": " npm --prefix client run dev",
+        "client": "npm --prefix client start",
+        "install-all": "npm --prefix client install",
+        "build": "npm --prefix client run build"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
 }

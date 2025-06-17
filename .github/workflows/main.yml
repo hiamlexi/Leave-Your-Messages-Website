@@ -15,10 +15,10 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: npm --prefix client install
 
       - name: Build project
-        run: npm run build
+        run: npm --prefix client run build
 
       # run tests later (or maybe not if I decided not to tets it)
       #- name: ✅ Run tests
