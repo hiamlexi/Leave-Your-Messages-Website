@@ -72,9 +72,12 @@ const Box = styled.div`
   gap: 0.2em;
 
   &::before {
+<<<<<<< Updated upstream
    @media only screen and (max-width: 768px) {
     text-align: center;
   }
+=======
+>>>>>>> Stashed changes
     content: "Byeeee!";
     position: absolute;
     top: -1.5em;
@@ -92,9 +95,12 @@ const Box = styled.div`
   }
 
   &::after {
+<<<<<<< Updated upstream
    @media only screen and (max-width: 768px) {
     text-align: center;
   }
+=======
+>>>>>>> Stashed changes
     content: "Bonjour!";
     position: absolute;
     top: -1.5em;
