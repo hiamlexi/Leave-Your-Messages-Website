@@ -10,5 +10,10 @@
     },
     "devDependencies": {
         "concurrently": "^8.2.2"
+    },
+    "dependencies": {
+        "@react-three/drei": "^10.3.0",
+        "@react-three/fiber": "^9.1.2",
+        "styled-components": "^6.1.19"
     }
 }
