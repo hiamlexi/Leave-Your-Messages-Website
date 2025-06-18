@@ -3,25 +3,12 @@ import styled from "styled-components";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Sphere, MeshDistortMaterial } from "@react-three/drei";
 
-const Section = styled.div`
-  height: 100vh;
-  scroll-snap-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-
-  @media only screen and (max-width: 768px) {
-    height: 200vh;
-  }
-`;
-
 const Container = styled.div`
-  height: 100%;
-  scroll-snap-align: center;
   width: 1400px;
   display: flex;
   justify-content: space-between;
+  height: 100%;
+  margin: 0 auto;
 
   @media only screen and (max-width: 768px) {
     width: 100%;
@@ -43,7 +30,6 @@ const Left = styled.div`
     align-items: center;
   }
 `;
-
 
 const Right = styled.div`
   flex: 3;
@@ -77,6 +63,7 @@ const Img = styled.img`
     }
   }
 `;
+
 const Box = styled.div`
   position: relative;
   cursor: pointer;
@@ -88,13 +75,13 @@ const Box = styled.div`
    @media only screen and (max-width: 768px) {
     text-align: center;
   }
-    content: 'Byeeeeee!';
+    content: "Byeeee!";
     position: absolute;
     top: -1.5em;
     width: 100%;
     color: #fff;
     text-align: center;
-font-size: clamp(2rem, 5vw, 74px);
+    font-size: clamp(2rem, 5vw, 74px);
     transition: 1s;
   }
 
@@ -108,13 +95,13 @@ font-size: clamp(2rem, 5vw, 74px);
    @media only screen and (max-width: 768px) {
     text-align: center;
   }
-    content: 'Welcome';
+    content: "Bonjour!";
     position: absolute;
     top: -1.5em;
     width: 100%;
     color: #fff;
     text-align: center;
-font-size: clamp(2rem, 5vw, 74px);
+    font-size: clamp(2rem, 5vw, 74px);
     transition: 1s;
     transform: translateY(100px);
     opacity: 0;
@@ -146,7 +133,7 @@ const OldDigit = styled(Span)`
   top: 0;
   left: 0;
   transition: 2s;
-  color:rgb(192, 199, 7);
+  color: rgb(192, 199, 7);
 
   ${Box}:hover & {
     transform: rotate(45deg) translateY(-200px);
@@ -160,7 +147,7 @@ const NewDigit = styled(Span)`
   top: 0;
   left: 0;
   transition: 2s;
-  color:rgb(214, 8, 94);
+  color: rgb(214, 8, 94);
   transform: rotate(-45deg) translateY(200px);
   opacity: 0;
   filter: blur(30px);
@@ -172,10 +159,9 @@ const NewDigit = styled(Span)`
   }
 `;
 
-
 const FirstPage = () => {
   return (
-    <Section>
+    <section>
       <Container>
         <Left>
           <Box>
@@ -205,7 +191,7 @@ const FirstPage = () => {
           <Img src="./img/moon.png" />
         </Right>
       </Container>
-    </Section>
+    </section>
   );
 };
 
