@@ -13,9 +13,6 @@ const Container = styled.div`
   scrollbar-width: none;
   color: white;
   background: url("/bg.jpeg");
-  &::-webkit-scrollbar{
-    display: none;
-  }
 `;
 
 function App() {
@@ -24,7 +21,6 @@ function App() {
       <Navbar />
       <FirstPage />
       <SecondPage />
-
     </Container>
   );
 }

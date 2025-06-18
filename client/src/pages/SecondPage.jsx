@@ -11,42 +11,53 @@ const Section = styled.section`
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  background: #fff; /* Optional: white background for contrast */
+  align-items: center;
 `;
+
 
 const Title = styled.h1`
   font-size: 2.5rem;
-  color: #111;
+  color: yellow;
   text-align: center;
   margin-bottom: 2rem;
+  border: 1px solid red;
 `;
+
+
 
 const VideoWrapper = styled.div`
   position: relative;
   width: 90%;
   max-width: 1000px;
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 2.5 / 1;
   border-radius: 60px;
-  overflow: hidden;
 `;
 
 const StyledVideo = styled.video`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const PlaneImage = styled.img`
+  z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  border-radius: 100px;
+`;
+
+const PlaneImage = styled.img`
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
+  
 `;
+
 
 const SecondPage = () => {
   useEffect(() => {

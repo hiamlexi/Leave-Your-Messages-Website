@@ -3,6 +3,7 @@
 html {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+  overflow-y: scroll;
 }
 
 * {
@@ -26,7 +27,6 @@ section {
   height: 100vh;
   width: 100vw;
   scroll-snap-align: center;
-  overflow: hidden;
 }
 
 img,
@@ -40,11 +40,13 @@ video {
     @content;
   }
 }
+
 @mixin tablet {
   @media (max-width: 1024px) {
     @content;
   }
 }
+
 @mixin desktop {
   @media (max-width: 1366px) {
     @content;

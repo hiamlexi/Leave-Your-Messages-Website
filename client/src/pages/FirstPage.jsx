@@ -10,13 +10,23 @@ const Container = styled.div`
   height: 100%;
   margin: 0 auto;
 
-  @media only screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     width: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 `;
+
+const CanvasWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+`;
+
 
 const Left = styled.div`
   flex: 2;
@@ -25,7 +35,7 @@ const Left = styled.div`
   justify-content: center;
   gap: 20px;
 
-  @media only screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     flex: 1;
     align-items: center;
   }
@@ -34,7 +44,8 @@ const Left = styled.div`
 const Right = styled.div`
   flex: 3;
   position: relative;
-  @media only screen and (max-width: 768px) {
+
+  @media (max-width: 768px) {
     flex: 1;
     width: 100%;
   }
@@ -52,7 +63,7 @@ const Img = styled.img`
   margin: auto;
   animation: animate 2s infinite ease alternate;
 
-  @media only screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     width: 300px;
     height: 300px;
   }
@@ -72,12 +83,6 @@ const Box = styled.div`
   gap: 0.2em;
 
   &::before {
-<<<<<<< Updated upstream
-   @media only screen and (max-width: 768px) {
-    text-align: center;
-  }
-=======
->>>>>>> Stashed changes
     content: "Byeeee!";
     position: absolute;
     top: -1.5em;
@@ -95,12 +100,6 @@ const Box = styled.div`
   }
 
   &::after {
-<<<<<<< Updated upstream
-   @media only screen and (max-width: 768px) {
-    text-align: center;
-  }
-=======
->>>>>>> Stashed changes
     content: "Bonjour!";
     position: absolute;
     top: -1.5em;
@@ -123,7 +122,7 @@ const Box = styled.div`
 
 const Span = styled.span`
   color: #fff;
-  font-size: 10em;
+  font-size: clamp(3rem, 10vw, 10em); 
   font-weight: bold;
   filter: blur(1px);
 `;
@@ -178,24 +177,27 @@ const FirstPage = () => {
             </DigitWrapper>
           </Box>
         </Left>
-        <Right>
-          <Canvas>
-            <Suspense fallback={null}>
-              <OrbitControls enableZoom={false} />
-              <ambientLight intensity={1} />
-              <directionalLight position={[3, 2, 1]} />
-              <Sphere args={[1, 100, 200]} scale={2.4}>
-                <MeshDistortMaterial
-                  color="#3d1c56"
-                  attach="material"
-                  distort={0.5}
-                  speed={2}
-                />
-              </Sphere>
-            </Suspense>
-          </Canvas>
-          <Img src="./img/moon.png" />
-        </Right>
+       <Right>
+  <CanvasWrapper>
+    <Canvas>
+      <Suspense fallback={null}>
+        <OrbitControls enableZoom={false} />
+        <ambientLight intensity={1} />
+        <directionalLight position={[3, 2, 1]} />
+        <Sphere args={[1, 100, 200]} scale={2.4}>
+          <MeshDistortMaterial
+            color="#3d1c56"
+            attach="material"
+            distort={0.5}
+            speed={2}
+          />
+        </Sphere>
+      </Suspense>
+    </Canvas>
+  </CanvasWrapper>
+  <Img src="./img/moon.png" />
+</Right>
+
       </Container>
     </section>
   );
