@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import styled from "styled-components";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Sphere, MeshDistortMaterial } from "@react-three/drei";
@@ -88,13 +88,13 @@ const Box = styled.div`
    @media only screen and (max-width: 768px) {
     text-align: center;
   }
-    content: 'Bye Bye';
+    content: 'Byeeeeee!';
     position: absolute;
     top: -1.5em;
     width: 100%;
     color: #fff;
     text-align: center;
-    font-size: 74px;
+font-size: clamp(2rem, 5vw, 74px);
     transition: 1s;
   }
 
@@ -114,7 +114,7 @@ const Box = styled.div`
     width: 100%;
     color: #fff;
     text-align: center;
-    font-size: 74px;
+font-size: clamp(2rem, 5vw, 74px);
     transition: 1s;
     transform: translateY(100px);
     opacity: 0;
@@ -173,7 +173,7 @@ const NewDigit = styled(Span)`
 `;
 
 
-const Hero = () => {
+const FirstPage = () => {
   return (
     <Section>
       <Container>
@@ -209,4 +209,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default FirstPage;
