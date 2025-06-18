@@ -7,7 +7,7 @@ import video from "../assets/sky.mp4";
 import aeroplane from "../assets/plane.png";
 
 const Section = styled.section`
-  height: 100vh;
+ height: 100vh;
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
