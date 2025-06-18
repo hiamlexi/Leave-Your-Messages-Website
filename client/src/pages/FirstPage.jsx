@@ -88,7 +88,7 @@ const Box = styled.div`
    @media only screen and (max-width: 768px) {
     text-align: center;
   }
-    content: 'Byeeeeee!';
+    content: 'Byeeee!';
     position: absolute;
     top: -1.5em;
     width: 100%;
@@ -108,7 +108,7 @@ font-size: clamp(2rem, 5vw, 74px);
    @media only screen and (max-width: 768px) {
     text-align: center;
   }
-    content: 'Welcome';
+    content: 'Bonjour!';
     position: absolute;
     top: -1.5em;
     width: 100%;

@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import FirstPage from "./components/FirstPage";
+import FirstPage from "./pages/FirstPage";
+import Navbar from "./components/Navbar";
 
 
 const Container = styled.div`
@@ -18,6 +19,7 @@ const Container = styled.div`
 function App() {
   return (
     <Container>
+              <Navbar />
       <FirstPage />
     </Container>
   );
