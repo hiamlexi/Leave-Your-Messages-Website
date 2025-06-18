@@ -16,14 +16,6 @@ const Section = styled.section`
 `;
 
 
-const Title = styled.h1`
-  font-size: 2.5rem;
-  color: yellow;
-  text-align: center;
-  margin-bottom: 2rem;
-  border: 1px solid red;
-`;
-
 
 
 const VideoWrapper = styled.div`
@@ -32,6 +24,7 @@ const VideoWrapper = styled.div`
   max-width: 1000px;
   aspect-ratio: 2.5 / 1;
   border-radius: 60px;
+    z-index: 0;
 `;
 
 const StyledVideo = styled.video`
@@ -55,9 +48,61 @@ const PlaneImage = styled.img`
   transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
+    @media (max-width: 768px) {
+    width: 135%;
+    height: 135%;
+  }
   
 `;
 
+const Msg = styled.h1`
+  font-size: 74px;
+
+  @media only screen and (max-width: 768px) {
+    text-align: center;
+      font-size: 50px;
+  }
+`;
+
+const SubMesage = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+    @media only screen and (max-width: 768px) {
+    padding: 20px;
+    text-align: center;
+  }
+`;
+
+
+const Subtitle = styled.h2`
+  color: #da4ea2;
+    align-items: center;
+
+`;
+
+const Desc = styled.p`
+  font-size: 24px;
+  color: lightgray;
+  @media only screen and (max-width: 768px) {
+    padding: 20px;
+    text-align: center;
+  }
+`;
+
+const Button = styled.button`
+  background-color: #da4ea2;
+  color: white;
+  font-weight: 500;
+  width: 100px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+/* <Title data-aos="fade-up" data-aos-duration="2500">
+       My Journey
+      </Title>*/ 
 
 const SecondPage = () => {
   useEffect(() => {
@@ -66,9 +111,14 @@ const SecondPage = () => {
 
   return (
     <Section>
-      <Title data-aos="fade-up" data-aos-duration="2500">
-        Start Planning Your Next Trip With Us
-      </Title>
+   
+          <Msg >Text Holder.</Msg>
+          <SubMesage>
+            <Subtitle>Text HolderText HolderText HolderText HolderText Holder</Subtitle>
+          </SubMesage>
+          <Desc>
+           Text HolderText HolderText HolderText HolderText HolderText HolderText Holder
+          </Desc>
       <VideoWrapper>
         <StyledVideo src={video} autoPlay muted loop />
         <PlaneImage src={aeroplane} alt="Plane" />
