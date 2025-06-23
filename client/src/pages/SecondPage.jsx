@@ -7,7 +7,7 @@ import video from "../assets/sky.mp4";
 import aeroplane from "../assets/plane.png";
 
 const Section = styled.section`
- height: 100vh;
+  height: 100vh;
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
@@ -15,16 +15,13 @@ const Section = styled.section`
   align-items: center;
 `;
 
-
-
-
 const VideoWrapper = styled.div`
   position: relative;
   width: 90%;
   max-width: 1000px;
   aspect-ratio: 2.5 / 1;
   border-radius: 60px;
-    z-index: 0;
+  z-index: 0;
 `;
 
 const StyledVideo = styled.video`
@@ -48,11 +45,10 @@ const PlaneImage = styled.img`
   transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
-    @media (max-width: 768px) {
+  @media (max-width: 768px) {
     width: 135%;
     height: 135%;
   }
-  
 `;
 
 const Msg = styled.h1`
@@ -60,7 +56,7 @@ const Msg = styled.h1`
 
   @media only screen and (max-width: 768px) {
     text-align: center;
-      font-size: 50px;
+    font-size: 50px;
   }
 `;
 
@@ -68,17 +64,15 @@ const SubMesage = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-    @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 768px) {
     padding: 20px;
     text-align: center;
   }
 `;
 
-
 const Subtitle = styled.h2`
   color: #da4ea2;
-    align-items: center;
-
+  align-items: center;
 `;
 
 const Desc = styled.p`
@@ -102,7 +96,8 @@ const Button = styled.button`
 `;
 /* <Title data-aos="fade-up" data-aos-duration="2500">
        My Journey
-      </Title>*/ 
+       Maybe add fade up animation later? Havent decided the design yet
+      </Title>*/
 
 const SecondPage = () => {
   useEffect(() => {
@@ -111,14 +106,16 @@ const SecondPage = () => {
 
   return (
     <Section>
-   
-          <Msg >Text Holder.</Msg>
-          <SubMesage>
-            <Subtitle>Text HolderText HolderText HolderText HolderText Holder</Subtitle>
-          </SubMesage>
-          <Desc>
-           Text HolderText HolderText HolderText HolderText HolderText HolderText Holder
-          </Desc>
+      <Msg>My Journey</Msg>
+      <SubMesage>
+        <Subtitle>
+          26 years of life, 26 years of growth. Every journey shaped me. 🌍✈️
+        </Subtitle>
+      </SubMesage>
+      <Desc>
+        Grateful for all the places I've been, the people I've met, and the
+        lessons along the way.
+      </Desc>
       <VideoWrapper>
         <StyledVideo src={video} autoPlay muted loop />
         <PlaneImage src={aeroplane} alt="Plane" />
