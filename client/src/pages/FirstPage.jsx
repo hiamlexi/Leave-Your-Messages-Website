@@ -81,6 +81,11 @@ const Box = styled.div`
   display: flex;
   justify-content: center;
   gap: 0.2em;
+  overflow: visible;
+    height: 100px; 
+      min-width: 200px;
+
+
 
   &::before,
   &::after {
@@ -96,9 +101,11 @@ const Box = styled.div`
     -webkit-text-fill-color: transparent;
     animation: shine 3s linear infinite;
     transition: 1s;
-    filter: blur(30px);
     opacity: 0;
     transform: translateY(100px);
+      overflow: visible;
+          filter: blur(30px);
+
   }
 
   &::before {
@@ -158,7 +165,7 @@ const OldDigit = styled(Span)`
   ${Box}:hover & {
     transform: rotate(45deg) translateY(-200px);
     opacity: 0;
-    filter: blur(30px);
+    filter: blur(4px);
   }
 `;
 
@@ -170,7 +177,7 @@ const NewDigit = styled(Span)`
   color: rgb(214, 8, 94);
   transform: rotate(-45deg) translateY(200px);
   opacity: 0;
-  filter: blur(30px);
+  filter: blur(4px);
 
   ${Box}:hover & {
     transform: rotate(0deg) translateY(0px);
