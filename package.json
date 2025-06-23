@@ -16,6 +16,7 @@
         "@react-three/fiber": "^9.1.2",
         "aos": "^2.3.4",
         "framer-motion": "^12.18.1",
+        "react-router-dom": "^7.6.2",
         "styled-components": "^6.1.19"
     }
 }

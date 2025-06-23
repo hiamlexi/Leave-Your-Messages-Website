@@ -1,29 +1,17 @@
-import styled from "styled-components";
-import FirstPage from "./pages/FirstPage";
-import SecondPage from "./pages/SecondPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import JourneyPage from "./pages/SecondPage";
 
-import Navbar from "./components/Navbar";
-
-
-const Container = styled.div`
-  height: 100vh;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  overflow-y: auto;
-  scrollbar-width: none;
-  color: white;
-  background: url("/bg.jpeg");
-`;
-
-function App() {
+const App = () => {
   return (
-    <Container>
-      <Navbar />
-      <FirstPage />
-      <SecondPage />
-
-    </Container>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        //Journey page will be use for story page atm
+        <Route path="/story" element={<JourneyPage />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
