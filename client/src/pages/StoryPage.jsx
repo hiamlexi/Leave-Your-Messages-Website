@@ -177,6 +177,8 @@ const ImageWrapper = styled.div`
 const StyledImage = styled.img`
   max-width: 100%;
   vertical-align: middle;
+    border-radius: 20px;
+    border: 2px solid #ffffff1a; 
 `;
 
 const TimelineCircle = styled.div`
@@ -247,7 +249,7 @@ const Timeline = () => {
 
       <SectionHeading>
         <Container>
-                      <Navbar />
+          <Navbar />
           <VerticalPadding>
             <HeadingWrapper>
               <Title>The story of my 26</Title>
