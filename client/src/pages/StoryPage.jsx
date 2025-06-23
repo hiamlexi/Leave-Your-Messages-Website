@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Berlin from '../assets/berlin.avif';
+import Berlin from '../assets/Berlin.avif';
 import exam from '../assets/exam.gif';
 import newyear from '../assets/newyear.webp';
 import summer from '../assets/summer.gif';
