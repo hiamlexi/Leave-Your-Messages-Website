@@ -5,6 +5,9 @@ import newyear from '../assets/newyear.webp';
 import summer from '../assets/summer.gif';
 import winter from '../assets/winter.gif';
 import Navbar from "../components/Navbar";
+import PCModel from '../components/3dModelPC';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Environment } from '@react-three/drei';
 
 const PageWrapper = styled.div`
   position: relative;
@@ -18,6 +21,17 @@ const PageWrapper = styled.div`
 const SectionHeading = styled.section`
   background-color: #0a0a0a;
 `;
+
+<div style={{ height: '70vh', width: '100%' }}>
+  <Canvas camera={{ position: [0, 1, 5], fov: 45 }}>
+    <ambientLight intensity={0.5} />
+    <directionalLight position={[2, 2, 2]} intensity={1} />
+    <PCModel scale={0.5} />
+    <OrbitControls enableZoom={false} />
+    <Environment preset="sunset" />
+  </Canvas>
+</div>
+
 
 const SectionTimeline = styled.section`
   background-color: #0a0a0a;
@@ -261,7 +275,16 @@ const Timeline = () => {
           </VerticalPadding>
         </Container>
       </SectionHeading>
-
+{/* --- 3D MODEL SECTION --- */}
+  <div style={{ height: '70vh', width: '100%' }}>
+    <Canvas camera={{ position: [0, 1, 5], fov: 45 }}>
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[2, 2, 2]} />
+      <PCModel scale={0.5} />
+      <OrbitControls enableZoom={false} />
+      <Environment preset="sunset" />
+    </Canvas>
+  </div>
       <SectionTimeline>
         <Container>
           <TimelineComponent>
