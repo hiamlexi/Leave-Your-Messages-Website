@@ -4,6 +4,7 @@ import exam from '../assets/exam.gif';
 import newyear from '../assets/newyear.webp';
 import summer from '../assets/summer.gif';
 import winter from '../assets/winter.gif';
+import Navbar from "../components/Navbar";
 
 const PageWrapper = styled.div`
   position: relative;
@@ -243,8 +244,10 @@ const events = [
 const Timeline = () => {
   return (
     <PageWrapper>
+
       <SectionHeading>
         <Container>
+                      <Navbar />
           <VerticalPadding>
             <HeadingWrapper>
               <Title>The story of my 26</Title>
