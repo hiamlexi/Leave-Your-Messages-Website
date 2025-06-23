@@ -6129,4 +6129,4 @@ export function PCModel(props) {
 }
 
 export default PCModel
-
+useGLTF.preload(pcModelUrl);
