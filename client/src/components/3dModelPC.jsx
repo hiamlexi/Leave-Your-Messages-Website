@@ -6,11 +6,12 @@ Source: https://sketchfab.com/3d-models/gaming-pc-364175250e8847998d0135c357d8b6
 Title: Gaming-pc
 */
 
-import React, { useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
+import React, { useRef } from 'react';
+import { useGLTF } from '@react-three/drei';
+import pcModelUrl from '../assets/gamingPC.glb';
 
-export function Model(props) {
-  const { nodes, materials } = useGLTF('/scene.gltf')
+export function PCModel(props) {
+  const { nodes, materials } = useGLTF(pcModelUrl)
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.156}>
@@ -6127,4 +6128,5 @@ export function Model(props) {
   )
 }
 
-useGLTF.preload('/scene.gltf')
+export default PCModel
+
