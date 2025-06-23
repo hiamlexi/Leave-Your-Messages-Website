@@ -272,19 +272,20 @@ const Timeline = () => {
                 As 26 slips away, I just want to carry forward a little more softness, a little more courage, and a little less fear.
               </ParagraphLarge>
             </HeadingWrapper>
-          </VerticalPadding>
-        </Container>
-      </SectionHeading>
-{/* --- 3D MODEL SECTION --- */}
-  <div style={{ height: '70vh', width: '100%' }}>
+            {/* --- 3D MODEL SECTION --- */}
+  <div style={{ height: '100vh', width: '100%' }}>
     <Canvas camera={{ position: [0, 1, 5], fov: 45 }}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[2, 2, 2]} />
-      <PCModel scale={0.5} />
+      <PCModel scale={1} />
       <OrbitControls enableZoom={false} />
       <Environment preset="sunset" />
     </Canvas>
   </div>
+          </VerticalPadding>
+        </Container>
+      </SectionHeading>
+
       <SectionTimeline>
         <Container>
           <TimelineComponent>
