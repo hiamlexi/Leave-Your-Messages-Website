@@ -1,14 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
-import JourneyPage from "./pages/SecondPage";
+import StoryPage from "./pages/StoryPage"; //Journey page will be use for story page atm
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        //Journey page will be use for story page atm
-        <Route path="/story" element={<JourneyPage />} />
+        <Route path="/story" element={<StoryPage/>} />
       </Routes>
     </BrowserRouter>
   );

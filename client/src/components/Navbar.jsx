@@ -12,7 +12,6 @@ const Navbar = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-      This is a hidden words, YOU found it!
         </motion.span>
       </div>
     </div>
