@@ -273,15 +273,15 @@ const Timeline = () => {
               </ParagraphLarge>
             </HeadingWrapper>
             {/* --- 3D MODEL SECTION --- */}
-  <div style={{ height: '100vh', width: '100%' }}>
-    <Canvas camera={{ position: [0, 1, 5], fov: 45 }}>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[2, 2, 2]} />
-      <PCModel scale={1} />
-      <OrbitControls enableZoom={false} />
-      <Environment preset="sunset" />
-    </Canvas>
-  </div>
+            <div style={{ height: '100vh', width: '100%' }}>
+              <Canvas camera={{ position: [0, 1.5, 6], fov: 40 }}>
+                <ambientLight intensity={0.5} />
+                <directionalLight position={[2, 2, 2]} />
+                <PCModel scale={1.5} rotation={[0, -Math.PI / 2, 0]} />
+                <OrbitControls enableZoom={false} />
+                <Environment preset="sunset" />
+              </Canvas>
+            </div>
           </VerticalPadding>
         </Container>
       </SectionHeading>
