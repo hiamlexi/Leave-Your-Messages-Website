@@ -82,15 +82,30 @@ const Box = styled.div`
   justify-content: center;
   gap: 0.2em;
 
-  &::before {
-    content: "Byeeee!";
+  &::before,
+  &::after {
     position: absolute;
     top: -1.5em;
     width: 100%;
-    color: #fff;
     text-align: center;
     font-size: clamp(2rem, 5vw, 74px);
+    background: linear-gradient(90deg, #da4ea2, #fcf0f7, #da4ea2);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
     transition: 1s;
+    filter: blur(30px);
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  &::before {
+    content: "Byeeee!";
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0);
   }
 
   &:hover::before {
@@ -101,16 +116,6 @@ const Box = styled.div`
 
   &::after {
     content: "Bonjour!";
-    position: absolute;
-    top: -1.5em;
-    width: 100%;
-    color: #fff;
-    text-align: center;
-    font-size: clamp(2rem, 5vw, 74px);
-    transition: 1s;
-    transform: translateY(100px);
-    opacity: 0;
-    filter: blur(30px);
   }
 
   &:hover::after {
@@ -118,7 +123,17 @@ const Box = styled.div`
     opacity: 1;
     filter: blur(0px);
   }
+
+  @keyframes shine {
+    0% {
+      background-position: 0%;
+    }
+    100% {
+      background-position: 200%;
+    }
+  }
 `;
+
 
 const Span = styled.span`
   color: #fff;
