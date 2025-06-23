@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import PCModel from '../components/3dModelPC';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
+import { useState, useEffect } from 'react';
 
 const PageWrapper = styled.div`
   position: relative;
@@ -258,6 +259,16 @@ const events = [
 ];
 
 const Timeline = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 738);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <PageWrapper>
 
@@ -277,7 +288,11 @@ const Timeline = () => {
               <Canvas camera={{ position: [0, 1.5, 6], fov: 40 }}>
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[2, 2, 2]} />
-                <PCModel scale={1.5} rotation={[0, -Math.PI / 2, 0]}   position={[0.5, 0, 0]}  />
+                <PCModel
+                  scale={isMobile ? 1 : 1.5}
+                  rotation={[0, -Math.PI / 2, 0]}
+                  position={isMobile ? [0.3, -0.2, 0] : [0.5, 0, 0]}
+                />
                 <OrbitControls enableZoom={false} />
                 <Environment preset="sunset" />
               </Canvas>
@@ -292,7 +307,6 @@ const Timeline = () => {
             <TimelineProgress>
               <TimelineProgressBar />
             </TimelineProgress>
-
             {events.map((event, index) => (
               <TimelineItem key={index}>
                 <TimelineLeft>
