@@ -14,15 +14,14 @@ const PageWrapper = styled.div`
   background: url("/bg.jpeg");
 `;
 
-
 const SectionHeading = styled.section`
   background-color: #0a0a0a;
 `;
+
 const SectionTimeline = styled.section`
   background-color: #0a0a0a;
   position: relative;
   z-index: -3;
-
   height: auto !important;
   min-height: 100vh;
   scroll-snap-align: none !important;
@@ -51,12 +50,7 @@ const HeadingWrapper = styled.div`
 
 const Title = styled.h2`
   font-size: 50px;
-  background: linear-gradient(
-    90deg,
-    #da4ea2,
-    #fcf0f7,
-    #da4ea2
-  );
+  background: linear-gradient(90deg, #da4ea2, #fcf0f7, #da4ea2);
   background-size: 200%;
   background-clip: text;
   -webkit-background-clip: text;
@@ -76,7 +70,6 @@ const Title = styled.h2`
     }
   }
 `;
-
 
 const ParagraphLarge = styled.p`
   font-size: 20px;
@@ -213,22 +206,6 @@ const OverlayFadeBottom = styled.div`
   right: 0;
 `;
 
-const TimelineLink = styled.a`
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: white;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-  text-decoration: none;
-
-  &:hover {
-    opacity: 1;
-  }
-`;
-
 const events = [
   {
     date: "January 2024",
@@ -262,6 +239,7 @@ const events = [
     alt: "Newyear",
   },
 ];
+
 const Timeline = () => {
   return (
     <PageWrapper>
@@ -272,7 +250,7 @@ const Timeline = () => {
               <Title>The story of my 26</Title>
               <ParagraphLarge>
                 Not the beginning, not the end, just one unforgettable page <br />
-               As 26 slips away, I just want to carry forward a little more softness, a little more courage, and a little less fear. 
+                As 26 slips away, I just want to carry forward a little more softness, a little more courage, and a little less fear.
               </ParagraphLarge>
             </HeadingWrapper>
           </VerticalPadding>
@@ -298,15 +276,6 @@ const Timeline = () => {
                   <TimelineText>{event.text}</TimelineText>
                   {event.subtext && (
                     <LightGreyText>{event.subtext}</LightGreyText>
-                  )}
-                  {event.link && (
-                    <TimelineLink
-                      href={event.link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {event.link.label}
-                    </TimelineLink>
                   )}
                   <ImageWrapper>
                     <StyledImage
