@@ -1,3 +1,4 @@
+import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import FirstPage from "./FirstPage";
 import SecondPage from "./SecondPage";
@@ -19,13 +20,22 @@ const Container = styled.div`
 `;
 
 const MainPage = () => {
+  const containerRef = useRef(null);
+  const [scrollContainer, setScrollContainer] = useState(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setScrollContainer(containerRef.current);
+    }
+  }, []);
+
   return (
-    <Container>
+    <Container ref={containerRef}>
       <Navbar />
       <FirstPage />
       <SecondPage />
-      <ThirdPage />
-      <ThirdPage />
+      {scrollContainer && <ThirdPage scrollContainer={scrollContainer} />}
+      {scrollContainer && <ThirdPage scrollContainer={scrollContainer} />}
     </Container>
   );
 };
