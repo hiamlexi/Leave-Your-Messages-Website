@@ -15,45 +15,69 @@ import { ImagePreloader } from "../hook/ImagePreLoader";
 
 const Section = styled.section`
   min-height: 100vh;
+  width: 100%;
   scroll-snap-align: start;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
   overflow: hidden;
-  z-index: 1;
+
+  @media (max-width: 738px) {
+    flex-direction: column;
+    min-height: 150vh;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    padding-top: 63vh;
+  }
 `;
 
 const StyledImage = styled.img`
   position: absolute;
   object-fit: cover;
   pointer-events: none;
+
+  @media (max-width: 738px) {
+    width: 100vw;
+    height: auto;
+  }
 `;
 
 const Moon = styled(StyledImage)`
-  top: 0;
-  left: 0;
+  top: 2;
+  left: -150px;
   mix-blend-mode: screen;
   transform: translateY(0);
   transition: transform 0.6s ease;
+
+  @media (max-width: 738px) {
+    width: 300px;
+    height: auto;
+
+    top: 63vh;
+    left: 20px;
+  }
 `;
 
 const Train = styled(StyledImage)`
   transform: translateX(0);
   transition: transform 0.6s ease;
 `;
-
 const Heading = styled.h1`
   position: absolute;
   font-size: 2.5rem;
-  text-shadow: 10px 4px rgba(0, 0, 0, 0.5);
   top: 80px;
   left: 70%;
   z-index: 2;
   color: white;
-  transform: translateY(0);
-  transition: transform 0.6s ease;
+
+  @media (max-width: 738px) {
+    font-size: 2rem;
+    top: 63vh;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 `;
 
 const ThirdPage = ({ scrollContainer }) => {
