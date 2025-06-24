@@ -22,6 +22,7 @@ const Section = styled.section`
   align-items: center;
   z-index: 1000;
   overflow: hidden;
+  z-index: 1;
 `;
 
 const StyledImage = styled.img`
@@ -39,8 +40,6 @@ const Moon = styled(StyledImage)`
 `;
 
 const Train = styled(StyledImage)`
-  left: 0;
-  bottom: 0;
   transform: translateX(0);
   transition: transform 0.6s ease;
 `;
@@ -50,7 +49,7 @@ const Heading = styled.h1`
   font-size: 2.5rem;
   text-shadow: 10px 4px rgba(0, 0, 0, 0.5);
   top: 80px;
-  left: 3%;
+  left: 70%;
   z-index: 2;
   color: white;
   transform: translateY(0);
