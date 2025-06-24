@@ -1,0 +1,83 @@
+import { useEffect, useRef } from "react";
+import styled from "styled-components";
+
+import sky from "../assets/sky.png";
+import moon from "../assets/moon.png";
+import water from "../assets/water.png";
+import centerCity from "../assets/center-city.png";
+import rightCity from "../assets/right-city.png";
+import leftCity from "../assets/left-city.png";
+import train from "../assets/train.png";
+import rail from "../assets/rail.png";
+import hillLeft from "../assets/hill-left-1.png";
+import hillRight from "../assets/hill-right-1.png";
+
+const Section = styled.section`
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden;
+`;
+
+const StyledImage = styled.img`
+  position: absolute;
+  object-fit: cover;
+  pointer-events: none;
+`;
+
+const Heading = styled.h1`
+  position: absolute;
+  font-size: 2.5rem;
+  text-shadow: 10px 4px rgba(0, 0, 0, 0.5);
+  top: 80px;
+  left: 3%;
+  z-index: 2;
+`;
+
+const Moon = styled(StyledImage)`
+  mix-blend-mode: screen;
+`;
+
+const Train = styled(StyledImage)`
+  transition: left 0.1s ease;
+`;
+
+const ThirdPage = () => {
+  const moonRef = useRef(null);
+  const textRef = useRef(null);
+  const trainRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const value = window.scrollY;
+
+      if (moonRef.current) moonRef.current.style.top = `${value * 0.5}px`;
+      if (textRef.current) textRef.current.style.top = `${80 + value * 0.2}px`;
+      if (trainRef.current) trainRef.current.style.left = `${value * 1.5}px`;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <Section>
+      <StyledImage src={sky} alt="sky" />
+      <Moon src={moon} alt="moon" ref={moonRef} />
+      <StyledImage src={water} alt="water" />
+      <StyledImage src={centerCity} alt="center city" />
+      <StyledImage src={rightCity} alt="right city" />
+      <StyledImage src={leftCity} alt="left city" />
+      <Train src={train} alt="train" ref={trainRef} />
+      <StyledImage src={rail} alt="rail" />
+      <Heading ref={textRef}>Website</Heading>
+      <StyledImage src={hillLeft} alt="hill left" />
+      <StyledImage src={hillRight} alt="hill right" />
+    </Section>
+  );
+};
+
+export default ThirdPage;

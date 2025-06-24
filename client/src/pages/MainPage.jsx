@@ -2,6 +2,7 @@ import styled from "styled-components";
 import FirstPage from "./FirstPage";
 import SecondPage from "./SecondPage";
 import Navbar from "../components/Navbar";
+import ThirdPage from "./ThirdPage";
 
 const Container = styled.div`
   height: 100vh;
@@ -23,6 +24,8 @@ const MainPage = () => {
       <Navbar />
       <FirstPage />
       <SecondPage />
+      <ThirdPage />
+      <ThirdPage />
     </Container>
   );
 };
