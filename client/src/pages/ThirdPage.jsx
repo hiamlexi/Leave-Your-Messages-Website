@@ -14,6 +14,7 @@ import hillRight from "../assets/hill-right-1.png";
 
 const Section = styled.section`
   min-height: 100vh;
+  scroll-snap-align: start;
   position: relative;
   display: flex;
   justify-content: center;
@@ -28,6 +29,31 @@ const StyledImage = styled.img`
   pointer-events: none;
 `;
 
+/*const Heading = styled.h1`
+  position: absolute;
+  font-size: 2.5rem;
+  text-shadow: 10px 4px rgba(0, 0, 0, 0.5);
+  top: 80px;
+  left: 3%;
+  z-index: 2;
+  color: white;
+`;
+*/
+
+const Moon = styled(StyledImage)`
+  top: 0;
+  left: 0;
+  mix-blend-mode: screen;
+  transform: translateY(0);
+`;
+
+const Train = styled(StyledImage)`
+  left: 0;
+  bottom: 0;
+  transform: translateX(0);
+  transition: transform 0.1s ease;
+`;
+
 const Heading = styled.h1`
   position: absolute;
   font-size: 2.5rem;
@@ -35,36 +61,56 @@ const Heading = styled.h1`
   top: 80px;
   left: 3%;
   z-index: 2;
+  color: white;
+  transform: translateY(0);
 `;
 
-const Moon = styled(StyledImage)`
-  mix-blend-mode: screen;
-`;
-
-const Train = styled(StyledImage)`
-  transition: left 0.1s ease;
-`;
-
-const ThirdPage = () => {
+const ThirdPage = ({ scrollContainer }) => {
+  const sectionRef = useRef(null);
   const moonRef = useRef(null);
   const textRef = useRef(null);
   const trainRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const value = window.scrollY;
+    if (!scrollContainer || !sectionRef.current) return;
 
-      if (moonRef.current) moonRef.current.style.top = `${value * 0.5}px`;
-      if (textRef.current) textRef.current.style.top = `${80 + value * 0.2}px`;
-      if (trainRef.current) trainRef.current.style.left = `${value * 1.5}px`;
+    const section = sectionRef.current;
+
+    const handleScroll = () => {
+      const scrollTop = scrollContainer.scrollTop;
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+
+      const relativeScroll = scrollTop - sectionTop;
+
+      // skip animation when section out of view
+      if (relativeScroll < 0 || relativeScroll > sectionHeight) return;
+
+      if (moonRef.current) {
+        moonRef.current.style.transform = `translateY(${
+          relativeScroll * 0.5
+        }px)`;
+      }
+
+      if (textRef.current) {
+        textRef.current.style.transform = `translateY(${
+          relativeScroll * -0.2
+        }px)`;
+      }
+
+      if (trainRef.current) {
+        trainRef.current.style.transform = `translateX(${
+          relativeScroll * 1.5
+        }px)`;
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    scrollContainer.addEventListener("scroll", handleScroll);
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, [scrollContainer]);
 
   return (
-    <Section>
+    <Section ref={sectionRef}>
       <StyledImage src={sky} alt="sky" />
       <Moon src={moon} alt="moon" ref={moonRef} />
       <StyledImage src={water} alt="water" />
