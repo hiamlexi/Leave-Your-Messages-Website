@@ -11,6 +11,7 @@ import train from "../assets/train.png";
 import rail from "../assets/rail.png";
 import hillLeft from "../assets/hill-left-1.png";
 import hillRight from "../assets/hill-right-1.png";
+import { ImagePreloader } from "../hook/ImagePreLoader";
 
 const Section = styled.section`
   min-height: 100vh;
@@ -28,17 +29,6 @@ const StyledImage = styled.img`
   object-fit: cover;
   pointer-events: none;
 `;
-
-/*const Heading = styled.h1`
-  position: absolute;
-  font-size: 2.5rem;
-  text-shadow: 10px 4px rgba(0, 0, 0, 0.5);
-  top: 80px;
-  left: 3%;
-  z-index: 2;
-  color: white;
-`;
-*/
 
 const Moon = styled(StyledImage)`
   top: 0;
@@ -63,6 +53,7 @@ const Heading = styled.h1`
   z-index: 2;
   color: white;
   transform: translateY(0);
+  transition: transform 0.3s ease-out;
 `;
 
 const ThirdPage = ({ scrollContainer }) => {
@@ -71,6 +62,18 @@ const ThirdPage = ({ scrollContainer }) => {
   const textRef = useRef(null);
   const trainRef = useRef(null);
 
+  ImagePreloader([
+    sky,
+    moon,
+    water,
+    centerCity,
+    rightCity,
+    leftCity,
+    train,
+    rail,
+    hillLeft,
+    hillRight,
+  ]);
   useEffect(() => {
     if (!scrollContainer || !sectionRef.current) return;
 
