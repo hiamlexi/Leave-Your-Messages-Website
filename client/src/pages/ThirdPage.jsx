@@ -22,6 +22,7 @@ const Section = styled.section`
   align-items: center;
   z-index: 1000;
   overflow: hidden;
+  z-index: 1;
 `;
 
 const StyledImage = styled.img`
@@ -35,13 +36,12 @@ const Moon = styled(StyledImage)`
   left: 0;
   mix-blend-mode: screen;
   transform: translateY(0);
+  transition: transform 0.6s ease;
 `;
 
 const Train = styled(StyledImage)`
-  left: 0;
-  bottom: 0;
   transform: translateX(0);
-  transition: transform 0.1s ease;
+  transition: transform 0.6s ease;
 `;
 
 const Heading = styled.h1`
@@ -49,11 +49,11 @@ const Heading = styled.h1`
   font-size: 2.5rem;
   text-shadow: 10px 4px rgba(0, 0, 0, 0.5);
   top: 80px;
-  left: 3%;
+  left: 70%;
   z-index: 2;
   color: white;
   transform: translateY(0);
-  transition: transform 0.3s ease-out;
+  transition: transform 0.6s ease;
 `;
 
 const ThirdPage = ({ scrollContainer }) => {
@@ -61,6 +61,9 @@ const ThirdPage = ({ scrollContainer }) => {
   const moonRef = useRef(null);
   const textRef = useRef(null);
   const trainRef = useRef(null);
+
+  const hasEntered = useRef(false);
+  const inReverseAnimation = useRef(false);
 
   ImagePreloader([
     sky,
@@ -74,6 +77,7 @@ const ThirdPage = ({ scrollContainer }) => {
     hillLeft,
     hillRight,
   ]);
+
   useEffect(() => {
     if (!scrollContainer || !sectionRef.current) return;
 
@@ -85,26 +89,58 @@ const ThirdPage = ({ scrollContainer }) => {
       const sectionHeight = section.offsetHeight;
 
       const relativeScroll = scrollTop - sectionTop;
+      const isInView = relativeScroll >= 0 && relativeScroll <= sectionHeight;
 
-      // skip animation when section out of view
-      if (relativeScroll < 0 || relativeScroll > sectionHeight) return;
+      // Reverse animation if entering from above
+      if (
+        !hasEntered.current &&
+        scrollTop >= sectionTop - 50 &&
+        scrollTop < sectionTop + 50
+      ) {
+        inReverseAnimation.current = true;
+        hasEntered.current = true;
 
-      if (moonRef.current) {
-        moonRef.current.style.transform = `translateY(${
-          relativeScroll * 0.5
-        }px)`;
+        if (moonRef.current)
+          moonRef.current.style.transform = `translateY(100px)`;
+        if (textRef.current)
+          textRef.current.style.transform = `translateY(-100px)`;
+        if (trainRef.current)
+          trainRef.current.style.transform = `translateX(-150px)`;
+
+        // Delay to allow reverse-in animation
+        requestAnimationFrame(() => {
+          if (moonRef.current)
+            moonRef.current.style.transform = `translateY(0px)`;
+          if (textRef.current)
+            textRef.current.style.transform = `translateY(0px)`;
+          if (trainRef.current)
+            trainRef.current.style.transform = `translateX(0px)`;
+
+          // time for animation to settle before enabling scroll transform
+          setTimeout(() => {
+            inReverseAnimation.current = false;
+          }, 600); // match the CSS transition duration
+        });
+
+        return;
       }
 
-      if (textRef.current) {
-        textRef.current.style.transform = `translateY(${
-          relativeScroll * -0.2
-        }px)`;
-      }
-
-      if (trainRef.current) {
-        trainRef.current.style.transform = `translateX(${
-          relativeScroll * 1.5
-        }px)`;
+      if (isInView && !inReverseAnimation.current) {
+        if (moonRef.current) {
+          moonRef.current.style.transform = `translateY(${
+            relativeScroll * 0.5
+          }px)`;
+        }
+        if (textRef.current) {
+          textRef.current.style.transform = `translateY(${
+            relativeScroll * -0.2
+          }px)`;
+        }
+        if (trainRef.current) {
+          trainRef.current.style.transform = `translateX(${
+            relativeScroll * 1.5
+          }px)`;
+        }
       }
     };
 
@@ -114,7 +150,6 @@ const ThirdPage = ({ scrollContainer }) => {
 
   return (
     <Section ref={sectionRef}>
-      <StyledImage src={sky} alt="sky" />
       <Moon src={moon} alt="moon" ref={moonRef} />
       <StyledImage src={water} alt="water" />
       <StyledImage src={centerCity} alt="center city" />
@@ -122,7 +157,7 @@ const ThirdPage = ({ scrollContainer }) => {
       <StyledImage src={leftCity} alt="left city" />
       <Train src={train} alt="train" ref={trainRef} />
       <StyledImage src={rail} alt="rail" />
-      <Heading ref={textRef}>Website</Heading>
+      <Heading ref={textRef}>Wish Jar</Heading>
       <StyledImage src={hillLeft} alt="hill left" />
       <StyledImage src={hillRight} alt="hill right" />
     </Section>
