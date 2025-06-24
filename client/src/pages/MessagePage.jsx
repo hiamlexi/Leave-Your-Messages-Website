@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 
 const Section = styled.div`
@@ -65,7 +65,7 @@ const Button = styled.button`
 
 const Right = styled.div`
   flex: 1;
-
+  height: 100%;
   @media only screen and (max-width: 768px) {
     display: none;
   }
@@ -78,6 +78,17 @@ const MessagePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://unpkg.com/@splinetool/viewer/build/spline-viewer.js";
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   return (
     <Section>
       <Container>
@@ -95,7 +106,15 @@ const MessagePage = () => {
               "Your wish has been sent. Check it out at the Wish Jar :)"}
           </Form>
         </Left>
-        <Right></Right>
+        <Right>
+          <div style={{ width: "100%", height: "100%" }}>
+            <spline-viewer
+              url="https://prod.spline.design/FVZWbQH2B6ndj9UU/scene.splinecode"
+              events-target="global"
+              style={{ width: "100%", height: "100%" }}
+            ></spline-viewer>
+          </div>
+        </Right>
       </Container>
     </Section>
   );
