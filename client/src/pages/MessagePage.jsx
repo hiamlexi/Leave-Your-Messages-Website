@@ -12,62 +12,119 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 50px;
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    gap: 0;
+  }
 `;
 
 const Left = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  @media only screen and (max-width: 768px) {
-    justify-content: center;
-  }
-`;
-
-const Title = styled.h1`
-  font-weight: 200;
-`;
-
-const Form = styled.form`
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
+  justify-content: center;
 
   @media only screen and (max-width: 768px) {
-    width: 300px;
+    height: 50%;
+    padding-top: 20px;
   }
-`;
-
-const Input = styled.input`
-  padding: 20px;
-  background-color: #e8e6e6;
-  border: none;
-  border-radius: 5px;
-`;
-
-const TextArea = styled.textarea`
-  padding: 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #e8e6e6;
-`;
-
-const Button = styled.button`
-  background-color: #da4ea2;
-  color: white;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
-  padding: 20px;
 `;
 
 const Right = styled.div`
   flex: 1;
   height: 100%;
+
   @media only screen and (max-width: 768px) {
-    display: none;
+    height: 50%;
+  }
+`;
+
+const FormContainer = styled.div`
+  width: 400px;
+  background: linear-gradient(#212121, #212121) padding-box,
+    linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  label {
+    margin-bottom: 5px;
+    color: #717171;
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+    background-color: transparent;
+    border: 1px solid #414141;
+    resize: none;
+
+    &:focus {
+      outline: none;
+      border-color: #e81cff;
+    }
+  }
+
+  textarea {
+    height: 96px;
+  }
+
+  input::placeholder {
+    opacity: 0.5;
+  }
+`;
+
+const SubmitButton = styled.button`
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: flex-start;
+  font-family: inherit;
+  color: #717171;
+  font-weight: 600;
+  width: 40%;
+  background: #313131;
+  border: 1px solid #414141;
+  padding: 12px 16px;
+  font-size: inherit;
+  gap: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: #fff;
+    border-color: #fff;
+  }
+
+  &:active {
+    scale: 0.95;
   }
 `;
 
@@ -77,6 +134,8 @@ const MessagePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // TODO: Add submission logic here
+    setSuccess(true);
   };
 
   useEffect(() => {
@@ -93,24 +152,43 @@ const MessagePage = () => {
     <Section>
       <Container>
         <Left>
-          <Form ref={ref} onSubmit={handleSubmit}>
-            <Title>Write me a wish</Title>
-            <Input placeholder="Name" name="name" />
-            <TextArea
-              placeholder="Write your wish here..."
-              name="message"
-              rows={10}
-            />
-            <Button type="submit">Send</Button>
-            {success &&
-              "Your wish has been sent. Check it out at the Wish Jar :)"}
-          </Form>
+          <FormContainer>
+            <StyledForm ref={ref} onSubmit={handleSubmit}>
+              <FormGroup>
+                <label htmlFor="name">Your Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Enter your name"
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <label htmlFor="textarea">Drop me a wish!</label>
+                <textarea
+                  name="textarea"
+                  id="textarea"
+                  rows="10"
+                  cols="50"
+                  placeholder="Write your message here..."
+                  required
+                ></textarea>
+              </FormGroup>
+              <SubmitButton type="submit">Submit</SubmitButton>
+              {success && (
+                <p style={{ color: "#40c9ff", fontSize: "13px" }}>
+                  Your message has been sent successfully!
+                </p>
+              )}
+            </StyledForm>
+          </FormContainer>
         </Left>
         <Right>
           <div style={{ width: "100%", height: "100%" }}>
             <spline-viewer
               url="https://prod.spline.design/FVZWbQH2B6ndj9UU/scene.splinecode"
-              events-target="global"
+              events-target="local"
               style={{ width: "100%", height: "100%" }}
             ></spline-viewer>
           </div>
