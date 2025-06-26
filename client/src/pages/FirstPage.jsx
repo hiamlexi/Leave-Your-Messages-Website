@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import styled from "styled-components";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Sphere, MeshDistortMaterial } from "@react-three/drei";
+import newyear from "../assets/newyear.webp";
 
 const Container = styled.div`
   width: 1400px;
@@ -26,7 +27,6 @@ const CanvasWrapper = styled.div`
     height: 300px;
   }
 `;
-
 
 const Left = styled.div`
   flex: 2;
@@ -82,10 +82,8 @@ const Box = styled.div`
   justify-content: center;
   gap: 0.2em;
   overflow: visible;
-    height: 100px; 
-      min-width: 200px;
-
-
+  height: 100px;
+  min-width: 200px;
 
   &::before,
   &::after {
@@ -103,9 +101,8 @@ const Box = styled.div`
     transition: 1s;
     opacity: 0;
     transform: translateY(100px);
-      overflow: visible;
-          filter: blur(30px);
-
+    overflow: visible;
+    filter: blur(30px);
   }
 
   &::before {
@@ -141,10 +138,9 @@ const Box = styled.div`
   }
 `;
 
-
 const Span = styled.span`
   color: #fff;
-  font-size: clamp(3rem, 10vw, 10em); 
+  font-size: clamp(3rem, 10vw, 10em);
   font-weight: bold;
   filter: blur(1px);
 `;
@@ -199,27 +195,26 @@ const FirstPage = () => {
             </DigitWrapper>
           </Box>
         </Left>
-       <Right>
-  <CanvasWrapper>
-    <Canvas>
-      <Suspense fallback={null}>
-        <OrbitControls enableZoom={false} />
-        <ambientLight intensity={1} />
-        <directionalLight position={[3, 2, 1]} />
-        <Sphere args={[1, 100, 200]} scale={2.4}>
-          <MeshDistortMaterial
-            color="#3d1c56"
-            attach="material"
-            distort={0.5}
-            speed={2}
-          />
-        </Sphere>
-      </Suspense>
-    </Canvas>
-  </CanvasWrapper>
-  <Img src="./img/moon.png" />
-</Right>
-
+        <Right>
+          <CanvasWrapper>
+            <Canvas>
+              <Suspense fallback={null}>
+                <OrbitControls enableZoom={false} />
+                <ambientLight intensity={1} />
+                <directionalLight position={[3, 2, 1]} />
+                <Sphere args={[1, 100, 200]} scale={2.4}>
+                  <MeshDistortMaterial
+                    color="#3d1c56"
+                    attach="material"
+                    distort={0.5}
+                    speed={2}
+                  />
+                </Sphere>
+              </Suspense>
+            </Canvas>
+          </CanvasWrapper>
+          <Img src={newyear} />
+        </Right>
       </Container>
     </section>
   );
