@@ -1,16 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { FaCamera } from "react-icons/fa";
-import ImageUpload from "../components/ImageUpload"
+import ImageUpload from "../components/ImageUpload";
 
 const Section = styled.div`
-  height: 100vh;
+  height: 100%;
   scroll-snap-align: center;
-
-  @media only screen and (max-width: 768px) {
-    min-height: 100vh;
-    height: auto;
-  }
 `;
 
 const Container = styled.div`
@@ -19,9 +14,12 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 50px;
+  align-items: center;
+  justify-content: center;
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
+
     gap: 0;
   }
 `;
@@ -31,8 +29,7 @@ const Left = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
- overflow-y: visible;
-max-height: unset;
+
   @media only screen and (max-width: 768px) {
     height: 40%;
     padding-top: 20px;
@@ -41,26 +38,23 @@ max-height: unset;
 
 const Right = styled.div`
   flex: 1;
-  height: 100%;
 
   @media only screen and (max-width: 768px) {
     height: 50%;
   }
 `;
 
-// === Form ===
 const FormContainer = styled.div`
   width: 400px;
   background: linear-gradient(#212121, #212121) padding-box,
     linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
   border: 2px solid transparent;
-  padding: 32px 24px;
+  padding: 24px;
   font-size: 14px;
-  font-family: inherit;
   color: white;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   box-sizing: border-box;
   border-radius: 16px;
 `;
@@ -68,18 +62,15 @@ const FormContainer = styled.div`
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 `;
 
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2px;
- overflow-y: visible;
-max-height: unset;
+  gap: 6px;
 
   label {
-    margin-bottom: 5px;
     color: #717171;
     font-weight: 600;
     font-size: 12px;
@@ -103,7 +94,7 @@ max-height: unset;
   }
 
   textarea {
-    height: 96px;
+    height: 80px;
   }
 
   input::placeholder {
@@ -124,7 +115,7 @@ const SubmitButton = styled.button`
   text-transform: uppercase;
   cursor: pointer;
   background: linear-gradient(135deg, #3a8ffe 0%, #9658fe 100%);
-  margin-top: 16px;
+  margin-top: 12px;
 
   &:hover {
     filter: brightness(1.1);
@@ -135,8 +126,6 @@ const SubmitButton = styled.button`
   }
 `;
 
-
-// === Profile Image Upload ===
 const ProfileWrapper = styled.div`
   position: relative;
   align-self: center;
@@ -145,21 +134,21 @@ const ProfileWrapper = styled.div`
 const Circle = styled.div`
   border-radius: 100%;
   overflow: hidden;
-  width: 128px;
-  height: 128px;
+  width: 100px;
+  height: 100px;
   border: 2px solid rgba(255, 255, 255, 0.2);
 `;
 
 const ProfilePic = styled.img`
-  width: 128px;
-  height: 128px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
 `;
 
 const PImage = styled.div`
   position: absolute;
-  top: 90px;
+  top: 75px;
   right: -10px;
   color: #666666;
 
@@ -180,22 +169,6 @@ const UploadButton = styled(FaCamera)`
   font-size: 1.2em;
   cursor: pointer;
 `;
-
-const UploadWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-
-  & > * {
-    max-width: 100%;
-    max-height: 200px;
-  }
-`;
-
-
 
 const MessagePage = () => {
   const ref = useRef();
@@ -235,7 +208,11 @@ const MessagePage = () => {
   return (
     <Section>
       <Container>
-        <Left>
+        <Right>
+          <div style={{ width: "80%", height: "80%" }}></div>
+        </Right>
+
+        <Left style={{ width: "80%", height: "80%" }}>
           <FormContainer>
             <StyledForm ref={ref} onSubmit={handleSubmit}>
               <ProfileWrapper>
@@ -267,34 +244,30 @@ const MessagePage = () => {
                   required
                 />
               </FormGroup>
+
               <FormGroup>
                 <label htmlFor="textarea">Drop me a wish!</label>
                 <textarea
                   name="textarea"
                   id="textarea"
-                  rows="10"
-                  cols="50"
                   placeholder="Write your message here..."
                   required
                 ></textarea>
               </FormGroup>
-  <ImageUpload />
+
+              <FormGroup>
+                <ImageUpload />
+              </FormGroup>
+
               <SubmitButton type="submit">Submit</SubmitButton>
               {success && (
                 <p style={{ color: "#40c9ff", fontSize: "13px" }}>
                   Your message has been sent successfully!
                 </p>
               )}
-
-
             </StyledForm>
           </FormContainer>
         </Left>
-        <Right>
-          <div style={{ width: "100%", height: "100%" }}>
-
-<iframe src='https://my.spline.design/violentbirthdaychick-VLBA2VIBdhddjVf2Zh71a84v/' frameborder='0' width='100%' height='100%'></iframe>          </div>
-        </Right>
       </Container>
     </Section>
   );
