@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { FaCamera } from "react-icons/fa";
 import ImageUpload from "../components/ImageUpload";
-
 const Section = styled.div`
   height: 100%;
   scroll-snap-align: center;
@@ -10,16 +9,15 @@ const Section = styled.div`
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100vh; 
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   gap: 50px;
   align-items: center;
   justify-content: center;
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
-
     gap: 0;
   }
 `;
@@ -31,8 +29,9 @@ const Left = styled.div`
   justify-content: center;
 
   @media only screen and (max-width: 768px) {
-    height: 40%;
-    padding-top: 20px;
+    width: 100%; 
+    height: auto;
+    padding: 20px 0;
   }
 `;
 
@@ -40,12 +39,15 @@ const Right = styled.div`
   flex: 1;
 
   @media only screen and (max-width: 768px) {
-    height: 50%;
+    width: 100%; 
+    height: auto;
   }
 `;
 
 const FormContainer = styled.div`
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 90vh; 
   background: linear-gradient(#212121, #212121) padding-box,
     linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
   border: 2px solid transparent;
@@ -57,6 +59,7 @@ const FormContainer = styled.div`
   gap: 16px;
   box-sizing: border-box;
   border-radius: 16px;
+  overflow-y: auto;
 `;
 
 const StyledForm = styled.form`
@@ -170,6 +173,7 @@ const UploadButton = styled(FaCamera)`
   cursor: pointer;
 `;
 
+
 const MessagePage = () => {
   const ref = useRef();
   const fileInputRef = useRef();
@@ -209,10 +213,12 @@ const MessagePage = () => {
     <Section>
       <Container>
         <Right>
-          <div style={{ width: "80%", height: "80%" }}></div>
-        </Right>
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.16/build/spline-viewer.js"></script>
+<spline-viewer url="https://prod.spline.design/qz7jXPY0lbS73OXP/scene.splinecode"></spline-viewer>   
 
-        <Left style={{ width: "80%", height: "80%" }}>
+  </Right>
+
+        <Left>
           <FormContainer>
             <StyledForm ref={ref} onSubmit={handleSubmit}>
               <ProfileWrapper>
@@ -250,7 +256,7 @@ const MessagePage = () => {
                 <textarea
                   name="textarea"
                   id="textarea"
-                  placeholder="Write your message here..."
+                  placeholder="Write your message here or give the duck a little boop for a surprise :D..."
                   required
                 ></textarea>
               </FormGroup>
