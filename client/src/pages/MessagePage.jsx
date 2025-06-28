@@ -1,10 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { FaCamera } from "react-icons/fa";
+import ImageUpload from "../components/ImageUpload"
 
 const Section = styled.div`
   height: 100vh;
   scroll-snap-align: center;
+
+  @media only screen and (max-width: 768px) {
+    min-height: 100vh;
+    height: auto;
+  }
 `;
 
 const Container = styled.div`
@@ -25,9 +31,10 @@ const Left = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
+ overflow-y: visible;
+max-height: unset;
   @media only screen and (max-width: 768px) {
-    height: 50%;
+    height: 40%;
     padding-top: 20px;
   }
 `;
@@ -68,6 +75,8 @@ const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
+ overflow-y: visible;
+max-height: unset;
 
   label {
     margin-bottom: 5px;
@@ -103,32 +112,29 @@ const FormGroup = styled.div`
 `;
 
 const SubmitButton = styled.button`
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  align-self: flex-start;
-  font-family: inherit;
-  color: #717171;
-  font-weight: 600;
-  width: 40%;
-  background: #313131;
-  border: 1px solid #414141;
-  padding: 12px 16px;
-  font-size: inherit;
-  gap: 8px;
-  margin-top: 8px;
+  width: 100%;
+  height: 40px;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   cursor: pointer;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #3a8ffe 0%, #9658fe 100%);
+  margin-top: 16px;
 
   &:hover {
-    background-color: #fff;
-    border-color: #fff;
+    filter: brightness(1.1);
   }
 
   &:active {
-    scale: 0.95;
+    transform: scale(0.97);
   }
 `;
+
 
 // === Profile Image Upload ===
 const ProfileWrapper = styled.div`
@@ -174,6 +180,22 @@ const UploadButton = styled(FaCamera)`
   font-size: 1.2em;
   cursor: pointer;
 `;
+
+const UploadWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+
+  & > * {
+    max-width: 100%;
+    max-height: 200px;
+  }
+`;
+
+
 
 const MessagePage = () => {
   const ref = useRef();
@@ -256,23 +278,22 @@ const MessagePage = () => {
                   required
                 ></textarea>
               </FormGroup>
+  <ImageUpload />
               <SubmitButton type="submit">Submit</SubmitButton>
               {success && (
                 <p style={{ color: "#40c9ff", fontSize: "13px" }}>
                   Your message has been sent successfully!
                 </p>
               )}
+
+
             </StyledForm>
           </FormContainer>
         </Left>
         <Right>
           <div style={{ width: "100%", height: "100%" }}>
-            <spline-viewer
-              url="https://prod.spline.design/FVZWbQH2B6ndj9UU/scene.splinecode"
-              events-target="local"
-              style={{ width: "100%", height: "100%" }}
-            ></spline-viewer>
-          </div>
+
+<iframe src='https://my.spline.design/violentbirthdaychick-VLBA2VIBdhddjVf2Zh71a84v/' frameborder='0' width='100%' height='100%'></iframe>          </div>
         </Right>
       </Container>
     </Section>
