@@ -5,6 +5,7 @@ import SecondPage from "./SecondPage";
 import Navbar from "../components/Navbar";
 import ThirdPage from "./ThirdPage";
 import MessagePage from "./MessagePage";
+import PicturePage from "./PicturePage";
 
 const Container = styled.div`
   height: 100vh;
@@ -36,6 +37,7 @@ const MainPage = () => {
       <FirstPage />
       <SecondPage />
       {scrollContainer && <ThirdPage scrollContainer={scrollContainer} />}
+      <PicturePage />
       <MessagePage />
     </Container>
   );
