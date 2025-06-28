@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
+import { FaCamera } from "react-icons/fa";
 
 const Section = styled.div`
   height: 100vh;
@@ -40,6 +41,7 @@ const Right = styled.div`
   }
 `;
 
+// === Form ===
 const FormContainer = styled.div`
   width: 400px;
   background: linear-gradient(#212121, #212121) padding-box,
@@ -128,14 +130,74 @@ const SubmitButton = styled.button`
   }
 `;
 
+// === Profile Image Upload ===
+const ProfileWrapper = styled.div`
+  position: relative;
+  align-self: center;
+`;
+
+const Circle = styled.div`
+  border-radius: 100%;
+  overflow: hidden;
+  width: 128px;
+  height: 128px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+`;
+
+const ProfilePic = styled.img`
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
+  display: block;
+`;
+
+const PImage = styled.div`
+  position: absolute;
+  top: 90px;
+  right: -10px;
+  color: #666666;
+
+  &:hover {
+    color: #999;
+  }
+
+  @media only screen and (max-width: 768px) {
+    right: 0;
+  }
+`;
+
+const HiddenFileInput = styled.input`
+  display: none;
+`;
+
+const UploadButton = styled(FaCamera)`
+  font-size: 1.2em;
+  cursor: pointer;
+`;
+
 const MessagePage = () => {
   const ref = useRef();
+  const fileInputRef = useRef();
+  const imageRef = useRef();
   const [success, setSuccess] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Add submission logic here
     setSuccess(true);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      imageRef.current.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const triggerFileSelect = () => {
+    fileInputRef.current.click();
   };
 
   useEffect(() => {
@@ -154,6 +216,25 @@ const MessagePage = () => {
         <Left>
           <FormContainer>
             <StyledForm ref={ref} onSubmit={handleSubmit}>
+              <ProfileWrapper>
+                <Circle>
+                  <ProfilePic
+                    ref={imageRef}
+                    src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+                    alt="Profile"
+                  />
+                </Circle>
+                <PImage>
+                  <UploadButton onClick={triggerFileSelect} />
+                  <HiddenFileInput
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                </PImage>
+              </ProfileWrapper>
+
               <FormGroup>
                 <label htmlFor="name">Your Name</label>
                 <input
