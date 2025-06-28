@@ -1,18 +1,20 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { FaCamera } from "react-icons/fa";
-
+import ImageUpload from "../components/ImageUpload";
 const Section = styled.div`
-  height: 100vh;
+  height: 100%;
   scroll-snap-align: center;
 `;
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100vh; 
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   gap: 50px;
+  align-items: center;
+  justify-content: center;
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
@@ -27,50 +29,51 @@ const Left = styled.div`
   justify-content: center;
 
   @media only screen and (max-width: 768px) {
-    height: 50%;
-    padding-top: 20px;
+    width: 100%; 
+    height: auto;
+    padding: 20px 0;
   }
 `;
 
 const Right = styled.div`
   flex: 1;
-  height: 100%;
 
   @media only screen and (max-width: 768px) {
-    height: 50%;
+    width: 100%; 
+    height: auto;
   }
 `;
 
-// === Form ===
 const FormContainer = styled.div`
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 90vh; 
   background: linear-gradient(#212121, #212121) padding-box,
     linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
   border: 2px solid transparent;
-  padding: 32px 24px;
+  padding: 24px;
   font-size: 14px;
-  font-family: inherit;
   color: white;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   box-sizing: border-box;
   border-radius: 16px;
+  overflow-y: auto;
 `;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 `;
 
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
 
   label {
-    margin-bottom: 5px;
     color: #717171;
     font-weight: 600;
     font-size: 12px;
@@ -94,7 +97,7 @@ const FormGroup = styled.div`
   }
 
   textarea {
-    height: 96px;
+    height: 80px;
   }
 
   input::placeholder {
@@ -103,34 +106,29 @@ const FormGroup = styled.div`
 `;
 
 const SubmitButton = styled.button`
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  align-self: flex-start;
-  font-family: inherit;
-  color: #717171;
-  font-weight: 600;
-  width: 40%;
-  background: #313131;
-  border: 1px solid #414141;
-  padding: 12px 16px;
-  font-size: inherit;
-  gap: 8px;
-  margin-top: 8px;
+  width: 100%;
+  height: 40px;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   cursor: pointer;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #3a8ffe 0%, #9658fe 100%);
+  margin-top: 12px;
 
   &:hover {
-    background-color: #fff;
-    border-color: #fff;
+    filter: brightness(1.1);
   }
 
   &:active {
-    scale: 0.95;
+    transform: scale(0.97);
   }
 `;
 
-// === Profile Image Upload ===
 const ProfileWrapper = styled.div`
   position: relative;
   align-self: center;
@@ -139,21 +137,21 @@ const ProfileWrapper = styled.div`
 const Circle = styled.div`
   border-radius: 100%;
   overflow: hidden;
-  width: 128px;
-  height: 128px;
+  width: 100px;
+  height: 100px;
   border: 2px solid rgba(255, 255, 255, 0.2);
 `;
 
 const ProfilePic = styled.img`
-  width: 128px;
-  height: 128px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
 `;
 
 const PImage = styled.div`
   position: absolute;
-  top: 90px;
+  top: 75px;
   right: -10px;
   color: #666666;
 
@@ -174,6 +172,7 @@ const UploadButton = styled(FaCamera)`
   font-size: 1.2em;
   cursor: pointer;
 `;
+
 
 const MessagePage = () => {
   const ref = useRef();
@@ -213,6 +212,12 @@ const MessagePage = () => {
   return (
     <Section>
       <Container>
+        <Right>
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.16/build/spline-viewer.js"></script>
+<spline-viewer url="https://prod.spline.design/qz7jXPY0lbS73OXP/scene.splinecode"></spline-viewer>   
+
+  </Right>
+
         <Left>
           <FormContainer>
             <StyledForm ref={ref} onSubmit={handleSubmit}>
@@ -245,17 +250,21 @@ const MessagePage = () => {
                   required
                 />
               </FormGroup>
+
               <FormGroup>
                 <label htmlFor="textarea">Drop me a wish!</label>
                 <textarea
                   name="textarea"
                   id="textarea"
-                  rows="10"
-                  cols="50"
-                  placeholder="Write your message here..."
+                  placeholder="Write your message here or give the duck a little boop for a surprise :D..."
                   required
                 ></textarea>
               </FormGroup>
+
+              <FormGroup>
+                <ImageUpload />
+              </FormGroup>
+
               <SubmitButton type="submit">Submit</SubmitButton>
               {success && (
                 <p style={{ color: "#40c9ff", fontSize: "13px" }}>
@@ -265,15 +274,6 @@ const MessagePage = () => {
             </StyledForm>
           </FormContainer>
         </Left>
-        <Right>
-          <div style={{ width: "100%", height: "100%" }}>
-            <spline-viewer
-              url="https://prod.spline.design/FVZWbQH2B6ndj9UU/scene.splinecode"
-              events-target="local"
-              style={{ width: "100%", height: "100%" }}
-            ></spline-viewer>
-          </div>
-        </Right>
       </Container>
     </Section>
   );
