@@ -253,12 +253,13 @@ const PicturePage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const senderInfoRef = useRef(null);
   const [animating, setAnimating] = useState(false);
+const [messages, setMessages] = useState([]);
 
   const updateCarousel = (newIndex) => {
     if (animating) return;
     setAnimating(true);
 
-    const corrected = (newIndex + senders.length) % senders.length;
+const corrected = (newIndex + messages.length) % messages.length;
     setCurrentIndex(corrected);
 
     if (senderInfoRef.current) {
@@ -285,6 +286,19 @@ const PicturePage = () => {
     return "card hidden";
   };
 
+
+  useEffect(() => {
+  fetch("http://localhost:5000/api/messages")
+    .then((res) => res.json())
+    .then((data) => {
+      setMessages(data);
+    })
+    .catch((err) => {
+      console.error("❌ Failed to fetch messages:", err);
+    });
+}, []);
+
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "ArrowLeft") updateCarousel(currentIndex - 1);
@@ -306,20 +320,21 @@ const PicturePage = () => {
           &lt;
         </div>
         <div className="carousel-track">
-  {senders.map((sender, i) => (
-    <div key={i} className={getClass(i)} onClick={() => updateCarousel(i)}>
-      <img className="card-img" src={sender.pictureUrl || winter} alt={sender.name} />
-      <div className="card-content">
-        <div className="card-avatar-wrapper">
-          <img className="card-avatar-img" src={sender.avatarUrl || winter} alt="avatar" />
-        </div>
-        <div className="card-name">{sender.name}</div>
-        <div className="card-role" style={{ maxHeight: "80px", overflowY: "auto" }}>
-          {sender.message}
-        </div>
+  {messages.map((sender, i) => (
+  <div key={i} className={getClass(i)} onClick={() => updateCarousel(i)}>
+    <img className="card-img" src={sender.pictureUrl || winter} alt={sender.name} />
+    <div className="card-content">
+      <div className="card-avatar-wrapper">
+        <img className="card-avatar-img" src={sender.avatarUrl || winter} alt="avatar" />
+      </div>
+      <div className="card-name">{sender.name}</div>
+      <div className="card-role" style={{ maxHeight: "80px", overflowY: "auto" }}>
+        {sender.message}
       </div>
     </div>
-  ))}
+  </div>
+))
+}
 </div>
 
         <div
@@ -341,10 +356,11 @@ const PicturePage = () => {
       </div>
 
       <div className="sender-info" ref={senderInfoRef}>
-        <div className="sender-name">{senders[currentIndex]?.name}</div>
-        <div className="sender-role">
-          {new Date(senders[currentIndex]?.createdAt).toLocaleDateString()}
-        </div>
+       <div className="sender-name">{messages[currentIndex]?.name}</div>
+<div className="sender-role">
+  {messages[currentIndex]?.createdAt &&
+    new Date(messages[currentIndex]?.createdAt).toLocaleDateString()}
+</div>
 
       </div>
     </Section>
