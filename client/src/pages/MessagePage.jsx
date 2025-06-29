@@ -175,14 +175,45 @@ const UploadButton = styled(FaCamera)`
 
 
 const MessagePage = () => {
+  const [imageFile, setImageFile] = useState(null);
   const ref = useRef();
   const fileInputRef = useRef();
   const imageRef = useRef();
   const [success, setSuccess] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccess(true);
+
+    const form = ref.current;
+    const formData = new FormData(form);
+
+    const avatarFile = fileInputRef.current.files?.[0];
+    if (avatarFile) formData.append("avatar", avatarFile);
+
+    if (imageFile) formData.append("picture", imageFile);
+
+    try {
+      const res = await fetch("http://localhost:5000/api/messages", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        console.log("Successfully sent message");
+        setSuccess(true);
+        form.reset();
+        setImageFile(null);
+        //temp img and avatar
+        imageRef.current.src =
+          "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg";
+      } else {
+        console.error("❌ Failed to send message. Server responded with:", res.status);
+        setSuccess(false);
+      }
+    } catch (err) {
+      console.error("❌ Network error while sending message:", err);
+      setSuccess(false);
+    }
   };
 
   const handleImageChange = (e) => {
@@ -213,11 +244,9 @@ const MessagePage = () => {
     <Section>
       <Container>
         <Right>
-<script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.16/build/spline-viewer.js"></script>
-<spline-viewer url="https://prod.spline.design/qz7jXPY0lbS73OXP/scene.splinecode"></spline-viewer>   
-
-  </Right>
-
+          <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.16/build/spline-viewer.js"></script>
+          <spline-viewer url="https://prod.spline.design/qz7jXPY0lbS73OXP/scene.splinecode"></spline-viewer>
+        </Right>
         <Left>
           <FormContainer>
             <StyledForm ref={ref} onSubmit={handleSubmit}>
@@ -262,15 +291,21 @@ const MessagePage = () => {
               </FormGroup>
 
               <FormGroup>
-                <ImageUpload />
-              </FormGroup>
+                <ImageUpload onFileSelect={setImageFile} />              
+                 </FormGroup>
 
               <SubmitButton type="submit">Submit</SubmitButton>
-              {success && (
+              {success === true && (
                 <p style={{ color: "#40c9ff", fontSize: "13px" }}>
-                  Your message has been sent successfully!
+                  ✅ Your message has been sent successfully!
                 </p>
               )}
+              {success === false && (
+                <p style={{ color: "#ff4d4d", fontSize: "13px" }}>
+                  ❌ Failed to send your message. Please try again.
+                </p>
+              )}
+
             </StyledForm>
           </FormContainer>
         </Left>

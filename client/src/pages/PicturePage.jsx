@@ -306,23 +306,22 @@ const PicturePage = () => {
           &lt;
         </div>
         <div className="carousel-track">
-          {senders.map((sender, i) => (
-            <div
-              key={i}
-              className={getClass(i)}
-              onClick={() => updateCarousel(i)}
-            >
-              <img className="card-img" src={winter} alt={sender.name} />
-              <div className="card-content">
-                <div className="card-avatar-wrapper">
-                  <img className="card-avatar-img" src={winter} alt="avatar" />
-                </div>
-                <div className="card-name">{sender.name}</div>
-                <div className="card-role">{sender.role}</div>
-              </div>
-            </div>
-          ))}
+  {senders.map((sender, i) => (
+    <div key={i} className={getClass(i)} onClick={() => updateCarousel(i)}>
+      <img className="card-img" src={sender.pictureUrl || winter} alt={sender.name} />
+      <div className="card-content">
+        <div className="card-avatar-wrapper">
+          <img className="card-avatar-img" src={sender.avatarUrl || winter} alt="avatar" />
         </div>
+        <div className="card-name">{sender.name}</div>
+        <div className="card-role" style={{ maxHeight: "80px", overflowY: "auto" }}>
+          {sender.message}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
         <div
           className="nav-arrow right"
           onClick={() => updateCarousel(currentIndex + 1)}
@@ -342,8 +341,11 @@ const PicturePage = () => {
       </div>
 
       <div className="sender-info" ref={senderInfoRef}>
-        <div className="sender-name">{senders[currentIndex].name}</div>
-        <div className="sender-role">{senders[currentIndex].role}</div>
+        <div className="sender-name">{senders[currentIndex]?.name}</div>
+        <div className="sender-role">
+          {new Date(senders[currentIndex]?.createdAt).toLocaleDateString()}
+        </div>
+
       </div>
     </Section>
   );
