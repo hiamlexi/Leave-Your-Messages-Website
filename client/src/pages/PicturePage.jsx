@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import winter from "../assets/winter.gif";
+import winter from "../assets/winter.gif"; //using this as default card
 
 const styles = `
 
@@ -105,10 +105,19 @@ const styles = `
   text-align: center;
 }
 
-.card-role {
+
+.card-msg {
   font-size: 0.9rem;
   color: #94a3b8;
   text-align: center;
+  max-height: 80px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+
+.card-msg::-webkit-scrollbar {
+  display: none; 
 }
 
 .card.center {
@@ -181,7 +190,7 @@ const styles = `
   color: transparent;
 }
 
-.sender-role {
+.create-date {
   font-size: 1.1rem;
   color: #94a3b8;
   text-transform: uppercase;
@@ -240,6 +249,7 @@ const Section = styled.section`
   overflow: hidden;
 `;
 
+/*Maybe apply for later design (for default), I havent decided yet
 const senders = [
   { name: "Sender 1", role: "Sender Role" },
   { name: "Sender 2", role: "Sender Role" },
@@ -247,18 +257,26 @@ const senders = [
   { name: "Sender 4", role: "Sender Role" },
   { name: "Sender 5", role: "Sender Role" },
   { name: "Sender 6", role: "Sender Role" },
-];
+];*/
+
 
 const PicturePage = () => {
+  const [messages, setMessages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const senderInfoRef = useRef(null);
   const [animating, setAnimating] = useState(false);
+  const senderInfoRef = useRef(null);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/messages")
+      .then((res) => res.json())
+      .then((data) => setMessages(data))
+      .catch((err) => console.error(" Failed to fetch messages:", err));
+  }, []);
 
   const updateCarousel = (newIndex) => {
-    if (animating) return;
+    if (animating || messages.length === 0) return;
     setAnimating(true);
-
-    const corrected = (newIndex + senders.length) % senders.length;
+    const corrected = (newIndex + messages.length) % messages.length;
     setCurrentIndex(corrected);
 
     if (senderInfoRef.current) {
@@ -276,12 +294,13 @@ const PicturePage = () => {
   };
 
   const getClass = (i) => {
-    const offset = (i - currentIndex + senders.length) % senders.length;
+    const total = messages.length < 5 ? 5 : messages.length; // maintain card spacing if fewer messages
+    const offset = (i - currentIndex + total) % total;
     if (offset === 0) return "card center";
     if (offset === 1) return "card right-1";
     if (offset === 2) return "card right-2";
-    if (offset === senders.length - 1) return "card left-1";
-    if (offset === senders.length - 2) return "card left-2";
+    if (offset === total - 1) return "card left-1";
+    if (offset === total - 2) return "card left-2";
     return "card hidden";
   };
 
@@ -292,47 +311,42 @@ const PicturePage = () => {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [currentIndex]);
+  }, [currentIndex, messages]);
 
   return (
     <Section>
       <style>{styles}</style>
-
       <div className="carousel-container">
-        <div
-          className="nav-arrow left"
-          onClick={() => updateCarousel(currentIndex - 1)}
-        >
-          &lt;
-        </div>
+        <div className="nav-arrow left" onClick={() => updateCarousel(currentIndex - 1)}>&lt;</div>
         <div className="carousel-track">
-          {senders.map((sender, i) => (
-            <div
-              key={i}
-              className={getClass(i)}
-              onClick={() => updateCarousel(i)}
-            >
-              <img className="card-img" src={winter} alt={sender.name} />
-              <div className="card-content">
-                <div className="card-avatar-wrapper">
-                  <img className="card-avatar-img" src={winter} alt="avatar" />
+          {messages.length > 0 ? (
+            messages.map((msg, i) => (
+              <div key={msg._id || i} className={getClass(i)} onClick={() => updateCarousel(i)}>
+                <img className="card-img" src={msg.pictureUrl || winter} alt={msg.name} />
+                <div className="card-content">
+                  <div className="card-avatar-wrapper">
+                    <img className="card-avatar-img" src={msg.avatarUrl || winter} alt="avatar" />
+                  </div>
+                  <div className="card-name">{msg.name}</div>
+                  <div className="card-msg" style={{ maxHeight: "80px", overflowY: "auto" }}>
+                    {msg.message}
+                  </div>
                 </div>
-                <div className="card-name">{sender.name}</div>
-                <div className="card-role">{sender.role}</div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className={getClass(i)}>
+                <img className="card-img" src={winter} alt="placeholder" />
+              </div>
+            ))
+          )}
         </div>
-        <div
-          className="nav-arrow right"
-          onClick={() => updateCarousel(currentIndex + 1)}
-        >
-          &gt;
-        </div>
+        <div className="nav-arrow right" onClick={() => updateCarousel(currentIndex + 1)}>&gt;</div>
       </div>
 
       <div className="dots">
-        {senders.map((_, i) => (
+        {(messages.length > 0 ? messages : Array(5)).map((_, i) => (
           <div
             key={i}
             className={`dot ${i === currentIndex ? "active" : ""}`}
@@ -342,8 +356,11 @@ const PicturePage = () => {
       </div>
 
       <div className="sender-info" ref={senderInfoRef}>
-        <div className="sender-name">{senders[currentIndex].name}</div>
-        <div className="sender-role">{senders[currentIndex].role}</div>
+        <div className="sender-name">{messages[currentIndex]?.name || "Sender"}</div>
+        <div className="create-date">
+          {messages[currentIndex]?.createdAt &&
+            new Date(messages[currentIndex].createdAt).toLocaleDateString()}
+        </div>
       </div>
     </Section>
   );

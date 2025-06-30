@@ -77,7 +77,7 @@ const ChooseButton = styled.button`
   background: linear-gradient(135deg, #3a8ffe 0%, #9658fe 100%);
 `;
 
-const ImageUpload = () => {
+const ImageUpload = ({ onFileSelect }) => {
   const inputRef = useRef();
   const [preview, setPreview] = useState("");
   const [fileName, setFileName] = useState("");
@@ -87,10 +87,12 @@ const ImageUpload = () => {
   const handleChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     const reader = new FileReader();
     reader.onload = () => {
       setPreview(reader.result);
       setFileName(file.name);
+      onFileSelect?.(file);
     };
     reader.readAsDataURL(file);
   };
@@ -99,8 +101,8 @@ const ImageUpload = () => {
     setPreview("");
     setFileName("");
     inputRef.current.value = "";
+    onFileSelect?.(null);
   };
-
   return (
     <>
       <UploadBox>
@@ -119,7 +121,9 @@ const ImageUpload = () => {
           </>
         )}
       </UploadBox>
-      <ChooseButton onClick={handleClick}>Choose a picture</ChooseButton>
+      <ChooseButton type="button" onClick={handleClick}>
+        Choose a picture
+      </ChooseButton>
       <HiddenInput
         type="file"
         ref={inputRef}
