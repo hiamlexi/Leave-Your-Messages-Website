@@ -63,6 +63,8 @@ const Moon = styled(StyledImage)`
 const Train = styled(StyledImage)`
   transform: translateX(0);
   transition: transform 0.6s ease;
+   max-width: 100vw;
+     overflow: hidden;
 `;
 const Heading = styled.h1`
   position: absolute;

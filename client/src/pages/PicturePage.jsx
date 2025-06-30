@@ -105,10 +105,19 @@ const styles = `
   text-align: center;
 }
 
-.card-role {
+
+.card-msg {
   font-size: 0.9rem;
   color: #94a3b8;
   text-align: center;
+  max-height: 80px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+
+.card-msg::-webkit-scrollbar {
+  display: none; 
 }
 
 .card.center {
@@ -181,7 +190,7 @@ const styles = `
   color: transparent;
 }
 
-.sender-role {
+.create-date {
   font-size: 1.1rem;
   color: #94a3b8;
   text-transform: uppercase;
@@ -240,6 +249,7 @@ const Section = styled.section`
   overflow: hidden;
 `;
 
+/*Maybe apply for later design (for default), I havent decided yet
 const senders = [
   { name: "Sender 1", role: "Sender Role" },
   { name: "Sender 2", role: "Sender Role" },
@@ -247,7 +257,7 @@ const senders = [
   { name: "Sender 4", role: "Sender Role" },
   { name: "Sender 5", role: "Sender Role" },
   { name: "Sender 6", role: "Sender Role" },
-];
+];*/
 
 
 const PicturePage = () => {
@@ -318,7 +328,7 @@ const PicturePage = () => {
                     <img className="card-avatar-img" src={msg.avatarUrl || winter} alt="avatar" />
                   </div>
                   <div className="card-name">{msg.name}</div>
-                  <div className="card-role" style={{ maxHeight: "80px", overflowY: "auto" }}>
+                  <div className="card-msg" style={{ maxHeight: "80px", overflowY: "auto" }}>
                     {msg.message}
                   </div>
                 </div>
@@ -347,7 +357,7 @@ const PicturePage = () => {
 
       <div className="sender-info" ref={senderInfoRef}>
         <div className="sender-name">{messages[currentIndex]?.name || "Sender"}</div>
-        <div className="sender-role">
+        <div className="create-date">
           {messages[currentIndex]?.createdAt &&
             new Date(messages[currentIndex].createdAt).toLocaleDateString()}
         </div>
