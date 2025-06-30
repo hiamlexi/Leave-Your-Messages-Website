@@ -297,12 +297,12 @@ const MessagePage = () => {
               <SubmitButton type="submit">Submit</SubmitButton>
               {success === true && (
                 <p style={{ color: "#40c9ff", fontSize: "13px" }}>
-                  ✅ Your message has been sent successfully!
+                   Your message has been sent successfully!
                 </p>
               )}
               {success === false && (
                 <p style={{ color: "#ff4d4d", fontSize: "13px" }}>
-                  ❌ Failed to send your message. Please try again.
+                  Failed to send your message. Please try again.
                 </p>
               )}
 
