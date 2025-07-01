@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import React, { useEffect, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import winter from "../assets/winter.gif";
 import summer from "../assets/summer.gif";
@@ -30,6 +30,7 @@ const Left = styled.div`
   @media (max-width: 830px) {
     width: 100%;
     align-items: center;
+    text-align: center;
   }
 `;
 
@@ -143,6 +144,45 @@ const CircularImg = styled.img`
   display: block;
 `;
 
+const TypingHeader = styled.h1`
+  text-transform: uppercase;
+  letter-spacing: 1pt;
+  font-size: 30pt;
+  margin-bottom: 15px;
+  font-family: "Playfair Display", sans-serif;
+  color: #;
+`;
+
+const TypingParagraph = styled.p`
+  text-align: left;
+  font-family: "Roboto", sans-serif;
+  font-size: 11pt;
+  font-weight: 300;
+  width: 100%;
+  max-width: 500px;
+  display: none;
+  color: #;
+  @media (max-width: 830px) {
+    text-align: center;
+  }
+`;
+
+function typeEffect(element, speed) {
+  const text = element.innerText;
+  element.innerText = "";
+  let i = 0;
+
+  const timer = setInterval(() => {
+    if (i < text.length) {
+      element.append(text.charAt(i));
+      i++;
+    } else {
+      clearInterval(timer);
+    }
+  }, speed);
+}
+
+// === Flipping image section ===
 const ImgSection = (
   <FlipWrapper>
     <FlipCard>
@@ -162,12 +202,45 @@ const ImgSection = (
   </FlipWrapper>
 );
 
-
 const FourthPage = () => {
+  const headerRef = useRef(null);
+  const paragraphRef = useRef(null);
+
+  useEffect(() => {
+    const h1 = headerRef.current;
+    const p = paragraphRef.current;
+    const speed = 50;
+
+    if (h1 && p) {
+      const delay = h1.innerText.length * speed + speed;
+
+      typeEffect(h1, speed);
+      setTimeout(() => {
+        p.style.display = "block";
+        typeEffect(p, speed);
+      }, delay);
+    }
+  }, []);
+
   return (
     <section>
       <Container>
-        <Left>{/* Content for Left */}</Left>
+        <Left>
+          <TypingHeader ref={headerRef}>Sample typing effect.</TypingHeader>
+          <TypingParagraph ref={paragraphRef}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ante
+            arcu, dignissim non risus id, posuere efficitur felis. Vestibulum
+            arcu diam, semper non ipsum quis, dictum ultricies diam. Suspendisse
+            vel luctus sapien. Mauris tristique condimentum velit tincidunt
+            pharetra. Curabitur ut lectus eleifend, malesuada lorem eget,
+            consectetur augue. Nunc scelerisque nisi in lacus eleifend eleifend.
+            Praesent blandit ex at nunc maximus, ut sodales ante auctor. Nunc
+            elementum eros sit amet malesuada facilisis. Morbi eget elit
+            consequat, sodales urna in, lobortis nisi. Morbi dapibus velit eu
+            mattis bibendum. Nulla et nisi eget turpis vulputate suscipit eu nec
+            nunc. Pellentesque ut pulvinar quam.
+          </TypingParagraph>
+        </Left>
         <Right>{ImgSection}</Right>
       </Container>
     </section>
