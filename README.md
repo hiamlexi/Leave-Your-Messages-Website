@@ -1,17 +1,90 @@
-# React + Vite
+# Leave Your Messages Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack web application that allows users to leave messages with 3D interactive elements built with React, Three.js, and Node.js.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Interactive 3D message board using React Three Fiber
+- Real-time message submission and display
+- Image upload functionality with Cloudinary integration
+- MongoDB database for message persistence
+- Responsive design with smooth animations
+- Modern UI with styled-components
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+- React 19.1.0
+- Vite 6.3.5
+- Three.js / React Three Fiber
+- Framer Motion for animations
+- React Router for navigation
+- Styled Components
+- AOS (Animate On Scroll)
 
-# Note:
-Fork and refine some small design
+### Backend
+- Node.js with Express 5.1.0
+- MongoDB with Mongoose
+- Cloudinary for image storage
+- CORS enabled
+- Multer for file handling
 
-test
+## Prerequisites
+
+- Node.js (v18 or higher)
+- MongoDB account (MongoDB Atlas recommended)
+- Cloudinary account for image uploads
+- npm or yarn package manager
+
+## Quick Start
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/Leave-Your-Messages-Website.git
+cd Leave-Your-Messages-Website
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment variables (see setup.md for details)
+
+4. Run the development servers:
+```bash
+npm run dev
+```
+
+This will start both the client (http://localhost:5173) and server (http://localhost:5000) concurrently.
+
+##  Project Structure
+
+```
+Leave-Your-Messages-Website/
+├── client/              # React frontend
+│   ├── src/             # Source files
+│   ├── public/          # Static assets
+│   └── package.json     # Client dependencies
+├── server/              # Express backend
+│   ├── server.js        # Main server file
+│   ├── cloudinary.js    # Cloudinary configuration
+│   └── package.json     # Server dependencies
+├── package.json         # Root package.json with scripts
+└── setup.md            # Detailed setup instructions
+```
+
+## Available Scripts
+
+- `npm run dev` - Run both client and server concurrently
+- `npm run dev:client` - Run only the frontend
+- `npm run dev:server` - Run only the backend
+- `npm run build` - Build the client for production
+
+## Documentation
+
+For detailed setup instructions, environment configuration, and deployment guide, please refer to [setup.md](./setup.md).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
