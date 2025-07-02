@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { createGlobalStyle } from 'styled-components';
+
+const FontStyles = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=Amaranth|Source+Sans+Pro&display=swap');
+`;
 import Berlin from '../assets/Berlin.avif';
 import exam from '../assets/exam.gif';
 import newyear from '../assets/newyear.webp';
@@ -8,7 +13,7 @@ import Navbar from "../components/Navbar";
 import PCModel from '../components/3dModelPC';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const PageWrapper = styled.div`
   position: relative;
@@ -41,6 +46,7 @@ const SectionTimeline = styled.section`
   height: auto !important;
   min-height: 100vh;
   scroll-snap-align: none !important;
+  padding: 2em 0;
 `;
 
 const Container = styled.div`
@@ -96,7 +102,7 @@ const ParagraphLarge = styled.p`
   }
 `;
 
-const TimelineComponent = styled.div`
+const TimelineComponent = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -104,107 +110,203 @@ const TimelineComponent = styled.div`
   position: relative;
   max-width: 1120px;
   margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  
+  &:before {
+    background: #f1efef;
+    content: '';
+    height: 100%;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 4px;
+    
+    @media (max-width: 968px) {
+      left: 0;
+    }
+  }
 `;
 
-const TimelineProgress = styled.div`
-  position: absolute;
-  width: 3px;
-  height: 100%;
-  background-color: #414141;
-  z-index: -2;
-`;
 
-const TimelineProgressBar = styled.div`
-  position: fixed;
-  inset: 0 auto 50vh;
-  width: 3px;
-  height: 50vh;
-  background: linear-gradient(to bottom, #ff6a00, #ee0979);
-  z-index: -1;
-`;
-
-const TimelineItem = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 180px 1fr;
-  padding: 80px 0;
+const TimelineItem = styled.li`
+  clear: both;
+  list-style-type: none;
+  padding: 0 30px;
   position: relative;
+  width: 100%;
+  margin-bottom: 40px;
+  
+  &:before {
+    background: #8ed6d6;
+    border-radius: 50%;
+    content: '';
+    height: 20px;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 20px;
+    top: 0;
+    z-index: 1;
+    
+    @media (max-width: 968px) {
+      left: 0;
+      transform: none;
+    }
+  }
+  
+  &:nth-child(2):before {
+    background: #bea4ec;
+  }
+  
+  &:nth-child(3):before {
+    background: #aec785;
+  }
+  
+  &:nth-child(4):before {
+    background: #61d4d7;
+  }
+  
+  &:nth-child(5):before {
+    background: #da4ea2;
+  }
 
-  @media (max-width: 767px) {
-    grid-template-columns: 64px 1fr;
+  @media (max-width: 968px) {
+    padding: 0 0 0 30px;
     width: 100%;
   }
 `;
 
-const TimelineLeft = styled.div`
-  text-align: right;
-
-  @media (max-width: 767px) {
-    text-align: left;
-    grid-area: 1 / 2 / 2 / 3;
+const TimelineContent = styled.div`
+  background: #8ed6d6;
+  border: 2px solid #8ed6d6;
+  border-radius: 8px;
+  padding: 1.5em;
+  width: 46%;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: ${props => props.$isVisible ? 1 : 0};
+  animation: ${props => props.$isVisible ? props.$animation || 'fadeIn' : 'none'} 1.2s ease-out forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  ${TimelineItem}:nth-child(even) & {
+    float: right;
+    animation-name: fadeInRight;
+    
+    @media (max-width: 968px) {
+      float: none;
+      animation-name: fadeIn;
+    }
+  }
+  
+  ${TimelineItem}:nth-child(odd) & {
+    float: left;
+    clear: right;
+    animation-name: fadeInLeft;
+    
+    @media (max-width: 968px) {
+      float: none;
+      animation-name: fadeIn;
+    }
+  }
+  
+  ${TimelineItem}:nth-child(2) & {
+    background: #bea4ec;
+    border: 2px solid #bea4ec;
+  }
+  
+  ${TimelineItem}:nth-child(3) & {
+    background: #aec785;
+    border: 2px solid #aec785;
+  }
+  
+  ${TimelineItem}:nth-child(4) & {
+    background: #61d4d7;
+    border: 2px solid #61d4d7;
+  }
+  
+  ${TimelineItem}:nth-child(5) & {
+    background: #da4ea2;
+    border: 2px solid #da4ea2;
+  }
+  
+  @media (max-width: 968px) {
+    width: 100%;
+    margin: 2em 0;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 `;
 
-const TimelineCentre = styled.div`
-  display: flex;
-  justify-content: center;
-
-  @media (max-width: 767px) {
-    justify-content: flex-start;
-    grid-area: 1 / 1 / 3 / 2;
-  }
-`;
-
-const TimelineRight = styled.div``;
-
-const DateText = styled.div`
-  position: sticky;
-  top: 50vh;
-  font-size: 48px;
-  font-weight: 500;
-  line-height: 1.2;
+const TimelineDate = styled.h3`
   color: white;
-
-  @media (max-width: 767px) {
-    font-size: 36px;
-    margin-bottom: 24px;
-  }
-`;
-
-const TimelineText = styled.div`
+  font-family: 'Amaranth', sans-serif;
   font-size: 24px;
-  font-weight: 500;
-  line-height: 1.3;
-  color: white;
-
-  @media (max-width: 767px) {
+  margin: 0 0 16px 0;
+  
+  @media (max-width: 768px) {
     font-size: 20px;
   }
 `;
 
-const LightGreyText = styled.p`
-  color: #ffffffa6;
+const TimelineDescription = styled.p`
+  color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4em;
+  margin: 16px 0;
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
-const ImageWrapper = styled.div`
-  margin-bottom: 32px;
+const TimelineImage = styled.img`
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 16px;
 `;
 
-const StyledImage = styled.img`
-  max-width: 100%;
-  vertical-align: middle;
-    border-radius: 20px;
-    border: 2px solid #ffffff1a; 
-`;
 
-const TimelineCircle = styled.div`
-  width: 15px;
-  height: 15px;
-  background-color: white;
-  border-radius: 100%;
-  position: sticky;
-  top: 50vh;
-  box-shadow: 0 0 0 8px #0a0a0a;
-`;
+
 
 const OverlayFadeTop = styled.div`
   background-image: linear-gradient(#0a0a0a, #0a0a0a00);
@@ -260,6 +362,8 @@ const events = [
 
 const Timeline = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [visibleItems, setVisibleItems] = useState(new Set());
+  const itemRefs = useRef([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -269,8 +373,36 @@ const Timeline = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.dataset.index);
+            setVisibleItems((prev) => new Set(prev).add(index));
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    itemRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      itemRefs.current.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, []);
   return (
     <PageWrapper>
+      <FontStyles />
 
       <SectionHeading>
         <Container>
@@ -304,31 +436,25 @@ const Timeline = () => {
       <SectionTimeline>
         <Container>
           <TimelineComponent>
-            <TimelineProgress>
-              <TimelineProgressBar />
-            </TimelineProgress>
             {events.map((event, index) => (
               <TimelineItem key={index}>
-                <TimelineLeft>
-                  <DateText>{event.date}</DateText>
-                </TimelineLeft>
-                <TimelineCentre>
-                  <TimelineCircle />
-                </TimelineCentre>
-                <TimelineRight>
-                  <TimelineText>{event.text}</TimelineText>
-                  {event.subtext && (
-                    <LightGreyText>{event.subtext}</LightGreyText>
-                  )}
-                  <ImageWrapper>
-                    <StyledImage
-                      src={event.img}
-                      alt={event.alt}
-                      loading="lazy"
-                      width="480"
-                    />
-                  </ImageWrapper>
-                </TimelineRight>
+                <TimelineContent 
+                  ref={(el) => (itemRefs.current[index] = el)}
+                  data-index={index}
+                  $isVisible={visibleItems.has(index)}
+                  $animation={isMobile ? 'fadeIn' : (index % 2 === 0 ? 'fadeInLeft' : 'fadeInRight')}
+                >
+                  <TimelineImage
+                    src={event.img}
+                    alt={event.alt}
+                    loading="lazy"
+                  />
+                  <TimelineDate>{event.date}</TimelineDate>
+                  <TimelineDescription>
+                    {event.text}
+                    {event.subtext && <><br/>{event.subtext}</>}
+                  </TimelineDescription>
+                </TimelineContent>
               </TimelineItem>
             ))}
 
