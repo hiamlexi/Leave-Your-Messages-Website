@@ -62,6 +62,7 @@ const NumberSection = styled.div`
   
   @media (max-width: 768px) {
     height: auto;
+    padding: 60px 0 40px 0;
   }
 `;
 
@@ -70,11 +71,11 @@ const TextSection = styled.div`
   flex-direction: column;
   gap: 20px;
   height: 50%;
-  padding: 0 40px;
+  padding: 40px 40px 0 40px;
   
   @media (max-width: 768px) {
     height: auto;
-    padding: 0 20px;
+    padding: 40px 20px 0 20px;
     text-align: center;
   }
 `;
@@ -243,6 +244,14 @@ const FirstPage = () => {
     <section>
       <Container>
         <Left>
+          <TextSection>
+            <Title>Welcome to 27</Title>
+            <Subtitle>A New Chapter Begins</Subtitle>
+            <Paragraph>
+              As we bid farewell to 26 and embrace 27, let's celebrate the journey ahead. 
+              Every ending is a new beginning, and this year promises endless possibilities.
+            </Paragraph>
+          </TextSection>
           <NumberSection>
             <Box>
               <Span>2</Span>
@@ -252,14 +261,6 @@ const FirstPage = () => {
               </DigitWrapper>
             </Box>
           </NumberSection>
-          <TextSection>
-            <Title>Welcome to 27</Title>
-            <Subtitle>A New Chapter Begins</Subtitle>
-            <Paragraph>
-              As we bid farewell to 26 and embrace 27, let's celebrate the journey ahead. 
-              Every ending is a new beginning, and this year promises endless possibilities.
-            </Paragraph>
-          </TextSection>
         </Left>
         <Right>
           <CanvasWrapper>
