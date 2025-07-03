@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import FirstPage from "./FirstPage";
 import SecondPage from "./SecondPage";
 import FourthPage from "./FourthPage";
@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import ThirdPage from "./ThirdPage";
 import MessagePage from "./MessagePage";
 import PicturePage from "./PicturePage";
+import { FaPlane } from "react-icons/fa";
 
 const Container = styled.div`
   height: 100vh;
@@ -55,6 +56,65 @@ const Container = styled.div`
   scrollbar-color: #da4ea2 rgba(255, 255, 255, 0.1);
 `;
 
+const float = keyframes`
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+`;
+
+const BackToTopButton = styled.button`
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #da4ea2 0%, #c23d8f 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(218, 78, 162, 0.4);
+  transition: all 0.3s ease;
+  z-index: 9000;
+  animation: ${float} 3s ease-in-out infinite;
+  
+  &:hover {
+    animation-play-state: paused;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 25px rgba(218, 78, 162, 0.6);
+    background: linear-gradient(135deg, #c23d8f 0%, #a02d7a 100%);
+  }
+  
+  &:active {
+    transform: translateY(-2px);
+  }
+  
+  svg {
+    font-size: 20px;
+    transform: rotate(-45deg);
+  }
+  
+  @media (max-width: 768px) {
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    
+    svg {
+      font-size: 18px;
+    }
+  }
+`;
+
 const MainPage = () => {
   const containerRef = useRef(null);
   const [scrollContainer, setScrollContainer] = useState(null);
@@ -65,16 +125,45 @@ const MainPage = () => {
     }
   }, []);
 
+  const scrollToTop = () => {
+    console.log('Scroll to top clicked');
+    
+    // Try multiple methods to ensure scrolling works
+    if (containerRef.current) {
+      console.log('Container found:', containerRef.current);
+      
+      // Method 1: Direct scrollTop
+      containerRef.current.scrollTop = 0;
+      
+      // Method 2: scrollTo as backup
+      setTimeout(() => {
+        containerRef.current.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }, 10);
+    }
+    
+    // Method 3: Try document.documentElement as fallback
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
   return (
-    <Container ref={containerRef}>
-      <Navbar />
-      <FirstPage />
-      <SecondPage id="my-journey" />
-      {scrollContainer && <ThirdPage id="wish-jar" scrollContainer={scrollContainer} />}
-      <PicturePage id="memories" />
-      <MessagePage id="write-wish" />
-      <FourthPage />
-    </Container>
+    <>
+      <Container ref={containerRef}>
+        <Navbar />
+        <FirstPage />
+        <SecondPage id="my-journey" />
+        {scrollContainer && <ThirdPage id="wish-jar" scrollContainer={scrollContainer} />}
+        <PicturePage id="memories" />
+        <MessagePage id="write-wish" />
+        <FourthPage />
+      </Container>
+      <BackToTopButton onClick={scrollToTop} aria-label="Back to top">
+        <FaPlane />
+      </BackToTopButton>
+    </>
   );
 };
 
