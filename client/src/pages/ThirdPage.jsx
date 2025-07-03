@@ -37,6 +37,12 @@ const StyledImage = styled.img`
   position: absolute;
   object-fit: cover;
   pointer-events: none;
+  
+  /* Safari optimizations */
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 
   @media (max-width: 738px) {
     width: 100vw;
@@ -126,21 +132,33 @@ const ThirdPage = ({ scrollContainer, id }) => {
         inReverseAnimation.current = true;
         hasEntered.current = true;
 
-        if (moonRef.current)
-          moonRef.current.style.transform = `translateY(100px)`;
-        if (textRef.current)
-          textRef.current.style.transform = `translateY(-100px)`;
-        if (trainRef.current)
-          trainRef.current.style.transform = `translateX(-150px)`;
+        if (moonRef.current) {
+          moonRef.current.style.transform = `translate3d(0, 100px, 0)`;
+          moonRef.current.style.webkitTransform = `translate3d(0, 100px, 0)`;
+        }
+        if (textRef.current) {
+          textRef.current.style.transform = `translate3d(0, -100px, 0)`;
+          textRef.current.style.webkitTransform = `translate3d(0, -100px, 0)`;
+        }
+        if (trainRef.current) {
+          trainRef.current.style.transform = `translate3d(-150px, 0, 0)`;
+          trainRef.current.style.webkitTransform = `translate3d(-150px, 0, 0)`;
+        }
 
         // Delay to allow reverse-in animation
         requestAnimationFrame(() => {
-          if (moonRef.current)
-            moonRef.current.style.transform = `translateY(0px)`;
-          if (textRef.current)
-            textRef.current.style.transform = `translateY(0px)`;
-          if (trainRef.current)
-            trainRef.current.style.transform = `translateX(0px)`;
+          if (moonRef.current) {
+            moonRef.current.style.transform = `translate3d(0, 0, 0)`;
+            moonRef.current.style.webkitTransform = `translate3d(0, 0, 0)`;
+          }
+          if (textRef.current) {
+            textRef.current.style.transform = `translate3d(0, 0, 0)`;
+            textRef.current.style.webkitTransform = `translate3d(0, 0, 0)`;
+          }
+          if (trainRef.current) {
+            trainRef.current.style.transform = `translate3d(0, 0, 0)`;
+            trainRef.current.style.webkitTransform = `translate3d(0, 0, 0)`;
+          }
 
           // time for animation to settle before enabling scroll transform
           setTimeout(() => {
@@ -153,19 +171,28 @@ const ThirdPage = ({ scrollContainer, id }) => {
 
       if (isInView && !inReverseAnimation.current) {
         if (moonRef.current) {
-          moonRef.current.style.transform = `translateY(${
+          moonRef.current.style.transform = `translate3d(0, ${
             relativeScroll * 0.5
-          }px)`;
+          }px, 0)`;
+          moonRef.current.style.webkitTransform = `translate3d(0, ${
+            relativeScroll * 0.5
+          }px, 0)`;
         }
         if (textRef.current) {
-          textRef.current.style.transform = `translateY(${
+          textRef.current.style.transform = `translate3d(0, ${
             relativeScroll * -0.2
-          }px)`;
+          }px, 0)`;
+          textRef.current.style.webkitTransform = `translate3d(0, ${
+            relativeScroll * -0.2
+          }px, 0)`;
         }
         if (trainRef.current) {
-          trainRef.current.style.transform = `translateX(${
+          trainRef.current.style.transform = `translate3d(${
             relativeScroll * 1.5
-          }px)`;
+          }px, 0, 0)`;
+          trainRef.current.style.webkitTransform = `translate3d(${
+            relativeScroll * 1.5
+          }px, 0, 0)`;
         }
       }
     };
