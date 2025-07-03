@@ -59,10 +59,12 @@ const NumberSection = styled.div`
   align-items: center;
   justify-content: center;
   height: 50%;
+  order: 1; /* Desktop: numbers first */
   
   @media (max-width: 768px) {
     height: auto;
     padding: 60px 0 40px 0;
+    order: 2; /* Mobile: numbers second */
   }
 `;
 
@@ -72,11 +74,13 @@ const TextSection = styled.div`
   gap: 20px;
   height: 50%;
   padding: 40px 40px 0 40px;
+  order: 2; /* Desktop: text second */
   
   @media (max-width: 768px) {
     height: auto;
     padding: 40px 20px 0 20px;
     text-align: center;
+    order: 1; /* Mobile: text first */
   }
 `;
 
