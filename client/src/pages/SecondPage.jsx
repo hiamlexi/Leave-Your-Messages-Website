@@ -493,7 +493,7 @@ const events = [
   },
 ];
 
-const SecondPage = () => {
+const SecondPage = (props) => {
   const [isStoryExpanded, setIsStoryExpanded] = useState(false);
   const [visibleItems, setVisibleItems] = useState(new Set());
   const [isMobile, setIsMobile] = useState(false);
@@ -558,7 +558,7 @@ const SecondPage = () => {
   return (
     <>
       <FontStyles />
-      <Section style={{ position: 'relative' }}>
+      <Section id={props.id} style={{ position: 'relative' }}>
         <Msg>My Journey</Msg>
         <SubMessage>
           <Subtitle>

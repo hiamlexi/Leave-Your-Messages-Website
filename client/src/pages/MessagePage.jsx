@@ -174,7 +174,7 @@ const UploadButton = styled(FaCamera)`
 `;
 
 
-const MessagePage = () => {
+const MessagePage = (props) => {
   const [imageFile, setImageFile] = useState(null);
   const ref = useRef();
   const fileInputRef = useRef();
@@ -241,7 +241,7 @@ const MessagePage = () => {
   }, []);
 
   return (
-    <Section>
+    <Section id={props.id}>
       <Container>
         <Right>
           <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.16/build/spline-viewer.js"></script>

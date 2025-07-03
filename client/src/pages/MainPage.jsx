@@ -38,10 +38,10 @@ const MainPage = () => {
     <Container ref={containerRef}>
       <Navbar />
       <FirstPage />
-      <SecondPage />
-      {scrollContainer && <ThirdPage scrollContainer={scrollContainer} />}
-      <PicturePage />
-      <MessagePage />
+      <SecondPage id="my-journey" />
+      {scrollContainer && <ThirdPage id="wish-jar" scrollContainer={scrollContainer} />}
+      <PicturePage id="memories" />
+      <MessagePage id="write-wish" />
       <FourthPage />
     </Container>
   );

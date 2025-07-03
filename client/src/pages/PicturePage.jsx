@@ -260,7 +260,7 @@ const senders = [
 ];*/
 
 
-const PicturePage = () => {
+const PicturePage = (props) => {
   const [messages, setMessages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
@@ -314,7 +314,7 @@ const PicturePage = () => {
   }, [currentIndex, messages]);
 
   return (
-    <Section>
+    <Section id={props.id}>
       <style>{styles}</style>
       <div className="carousel-container">
         <div className="nav-arrow left" onClick={() => updateCarousel(currentIndex - 1)}>&lt;</div>

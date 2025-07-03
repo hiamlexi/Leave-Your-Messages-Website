@@ -82,7 +82,7 @@ const Heading = styled.h1`
   }
 `;
 
-const ThirdPage = ({ scrollContainer }) => {
+const ThirdPage = ({ scrollContainer, id }) => {
   const sectionRef = useRef(null);
   const moonRef = useRef(null);
   const textRef = useRef(null);
@@ -175,7 +175,7 @@ const ThirdPage = ({ scrollContainer }) => {
   }, [scrollContainer]);
 
   return (
-    <Section ref={sectionRef}>
+    <Section ref={sectionRef} id={id}>
       <Moon src={moon} alt="moon" ref={moonRef} />
       <StyledImage src={water} alt="water" />
       <StyledImage src={centerCity} alt="center city" />
