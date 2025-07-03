@@ -32,12 +32,15 @@ const Left = styled.div`
   flex: 2;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-between;
+  height: 100%;
+  padding: 80px 0;
 
   @media (max-width: 768px) {
     flex: 1;
     align-items: center;
+    padding: 40px 0;
+    gap: 40px;
   }
 `;
 
@@ -48,6 +51,59 @@ const Right = styled.div`
   @media (max-width: 768px) {
     flex: 1;
     width: 100%;
+  }
+`;
+
+const NumberSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50%;
+  
+  @media (max-width: 768px) {
+    height: auto;
+  }
+`;
+
+const TextSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 50%;
+  padding: 0 40px;
+  
+  @media (max-width: 768px) {
+    height: auto;
+    padding: 0 20px;
+    text-align: center;
+  }
+`;
+
+const Title = styled.h1`
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+`;
+
+const Subtitle = styled.h2`
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-weight: 500;
+  color: #da4ea2;
+  margin: 0;
+  line-height: 1.3;
+`;
+
+const Paragraph = styled.p`
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  color: #cccccc;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 500px;
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
   }
 `;
 
@@ -187,13 +243,23 @@ const FirstPage = () => {
     <section>
       <Container>
         <Left>
-          <Box>
-            <Span>2</Span>
-            <DigitWrapper>
-              <OldDigit>6</OldDigit>
-              <NewDigit>7</NewDigit>
-            </DigitWrapper>
-          </Box>
+          <NumberSection>
+            <Box>
+              <Span>2</Span>
+              <DigitWrapper>
+                <OldDigit>6</OldDigit>
+                <NewDigit>7</NewDigit>
+              </DigitWrapper>
+            </Box>
+          </NumberSection>
+          <TextSection>
+            <Title>Welcome to 27</Title>
+            <Subtitle>A New Chapter Begins</Subtitle>
+            <Paragraph>
+              As we bid farewell to 26 and embrace 27, let's celebrate the journey ahead. 
+              Every ending is a new beginning, and this year promises endless possibilities.
+            </Paragraph>
+          </TextSection>
         </Left>
         <Right>
           <CanvasWrapper>
