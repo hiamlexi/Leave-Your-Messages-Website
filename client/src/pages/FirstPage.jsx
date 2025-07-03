@@ -5,36 +5,57 @@ import { OrbitControls, Sphere, MeshDistortMaterial } from "@react-three/drei";
 import newyear from "../assets/newyear.webp";
 
 const Container = styled.div`
-  width: 1400px;
+  width: 100%;
+  max-width: 1400px;
   display: flex;
   justify-content: space-between;
   height: 100%;
   margin: 0 auto;
+  padding: 0 40px;
+
+  @media (max-width: 1200px) {
+    padding: 0 30px;
+  }
+
+  @media (max-width: 992px) {
+    padding: 0 20px;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 0 15px;
   }
 `;
 
 const CanvasWrapper = styled.div`
   width: 100%;
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
 
   @media (max-width: 768px) {
-    height: 300px;
+    position: relative;
+    height: 100%;
+    min-height: 300px;
   }
 `;
 
 const Left = styled.div`
-  flex: 2;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
   padding: 80px 0;
+  overflow: visible;
+  position: relative;
 
   @media (max-width: 768px) {
     flex: 1;
@@ -45,12 +66,17 @@ const Left = styled.div`
 `;
 
 const Right = styled.div`
-  flex: 3;
+  flex: 1;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
 
   @media (max-width: 768px) {
     flex: 1;
     width: 100%;
+    min-height: 350px;
   }
 `;
 
@@ -60,6 +86,8 @@ const NumberSection = styled.div`
   justify-content: center;
   height: 50%;
   order: 1; /* Desktop: numbers first */
+  overflow: visible;
+  position: relative;
   
   @media (max-width: 768px) {
     height: auto;
@@ -113,25 +141,42 @@ const Paragraph = styled.p`
 `;
 
 const Img = styled.img`
-  width: 800px;
-  height: 600px;
+  width: 90%;
+  max-width: 800px;
+  height: auto;
+  max-height: 600px;
   object-fit: contain;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   animation: animate 2s infinite ease alternate;
+  z-index: 1;
+
+  @media (max-width: 1200px) {
+    width: 85%;
+    max-width: 600px;
+    max-height: 450px;
+  }
+
+  @media (max-width: 992px) {
+    width: 80%;
+    max-width: 500px;
+    max-height: 400px;
+  }
 
   @media (max-width: 768px) {
-    width: 300px;
-    height: 300px;
+    width: 70%;
+    max-width: 300px;
+    max-height: 300px;
   }
 
   @keyframes animate {
+    from {
+      transform: translate(-50%, -50%) translateY(0);
+    }
     to {
-      transform: translateY(20px);
+      transform: translate(-50%, -50%) translateY(20px);
     }
   }
 `;
@@ -145,12 +190,16 @@ const Box = styled.div`
   overflow: visible;
   height: 100px;
   min-width: 200px;
+  padding: 0 50px;
 
   &::before,
   &::after {
     position: absolute;
-    top: -1.5em;
-    width: 100%;
+    top: -1.2em;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    width: auto;
+    white-space: nowrap;
     text-align: center;
     font-size: clamp(2rem, 5vw, 74px);
     background: linear-gradient(90deg, #da4ea2, #fcf0f7, #da4ea2);
@@ -161,20 +210,19 @@ const Box = styled.div`
     animation: shine 3s linear infinite;
     transition: 1s;
     opacity: 0;
-    transform: translateY(100px);
     overflow: visible;
     filter: blur(30px);
   }
 
   &::before {
     content: "Byeeee!";
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
     opacity: 1;
     filter: blur(0);
   }
 
   &:hover::before {
-    transform: translateY(-100px);
+    transform: translateX(-50%) translateY(-100px);
     opacity: 0;
     filter: blur(30px);
   }
@@ -184,7 +232,7 @@ const Box = styled.div`
   }
 
   &:hover::after {
-    transform: translateY(0px);
+    transform: translateX(-50%) translateY(0px);
     opacity: 1;
     filter: blur(0px);
   }
@@ -244,8 +292,20 @@ const NewDigit = styled(Span)`
 `;
 
 const FirstPage = () => {
+  // Calculate responsive sphere scale based on screen width
+  const getSphereScale = () => {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width < 768) return 1.8;
+      if (width < 992) return 2.0;
+      if (width < 1200) return 2.2;
+      return 2.4;
+    }
+    return 2.4;
+  };
+
   return (
-    <section>
+    <section style={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
       <Container>
         <Left>
           <TextSection>
@@ -273,7 +333,7 @@ const FirstPage = () => {
                 <OrbitControls enableZoom={false} />
                 <ambientLight intensity={1} />
                 <directionalLight position={[3, 2, 1]} />
-                <Sphere args={[1, 100, 200]} scale={2.4}>
+                <Sphere args={[1, 100, 200]} scale={getSphereScale()}>
                   <MeshDistortMaterial
                     color="#3d1c56"
                     attach="material"

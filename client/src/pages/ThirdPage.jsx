@@ -90,8 +90,8 @@ const Heading = styled.h1`
 
 const TextContainer = styled.div`
   position: absolute;
-  top: 140px;
-  left: 50%;
+  top: calc(80px + 60px); 
+  left: 70%; 
   transform: translateX(-50%);
   z-index: 2;
   max-width: 600px;
@@ -111,6 +111,7 @@ const TextContainer = styled.div`
     padding: 0 20px;
   }
 `;
+
 
 const Paragraph = styled.p`
   font-size: 1.1rem;
@@ -170,41 +171,25 @@ const ThirdPage = ({ scrollContainer, id }) => {
         inReverseAnimation.current = true;
         hasEntered.current = true;
 
-        if (moonRef.current) {
-          moonRef.current.style.transform = `translate3d(0, 100px, 0)`;
-          moonRef.current.style.webkitTransform = `translate3d(0, 100px, 0)`;
-        }
-        if (textRef.current) {
-          textRef.current.style.transform = `translate3d(0, -100px, 0)`;
-          textRef.current.style.webkitTransform = `translate3d(0, -100px, 0)`;
-        }
-        if (paragraphRef.current) {
-          paragraphRef.current.style.transform = `translateX(-50%) translate3d(0, -100px, 0)`;
-          paragraphRef.current.style.webkitTransform = `translateX(-50%) translate3d(0, -100px, 0)`;
-        }
-        if (trainRef.current) {
-          trainRef.current.style.transform = `translate3d(-150px, 0, 0)`;
-          trainRef.current.style.webkitTransform = `translate3d(-150px, 0, 0)`;
-        }
+        if (moonRef.current)
+          moonRef.current.style.transform = `translateY(100px)`;
+        if (textRef.current)
+          textRef.current.style.transform = `translateY(-100px)`;
+        if (paragraphRef.current)
+          paragraphRef.current.style.transform = `translateX(-50%) translateY(-100px)`;
+        if (trainRef.current)
+          trainRef.current.style.transform = `translateX(-150px)`;
 
         // Delay to allow reverse-in animation
         requestAnimationFrame(() => {
-          if (moonRef.current) {
-            moonRef.current.style.transform = `translate3d(0, 0, 0)`;
-            moonRef.current.style.webkitTransform = `translate3d(0, 0, 0)`;
-          }
-          if (textRef.current) {
-            textRef.current.style.transform = `translate3d(0, 0, 0)`;
-            textRef.current.style.webkitTransform = `translate3d(0, 0, 0)`;
-          }
-          if (paragraphRef.current) {
-            paragraphRef.current.style.transform = `translateX(-50%) translate3d(0, 0, 0)`;
-            paragraphRef.current.style.webkitTransform = `translateX(-50%) translate3d(0, 0, 0)`;
-          }
-          if (trainRef.current) {
-            trainRef.current.style.transform = `translate3d(0, 0, 0)`;
-            trainRef.current.style.webkitTransform = `translate3d(0, 0, 0)`;
-          }
+          if (moonRef.current)
+            moonRef.current.style.transform = `translateY(0px)`;
+          if (textRef.current)
+            textRef.current.style.transform = `translateY(0px)`;
+          if (paragraphRef.current)
+            paragraphRef.current.style.transform = `translateX(-50%) translateY(0px)`;
+          if (trainRef.current)
+            trainRef.current.style.transform = `translateX(0px)`;
 
           // time for animation to settle before enabling scroll transform
           setTimeout(() => {
@@ -226,9 +211,6 @@ const ThirdPage = ({ scrollContainer, id }) => {
         }
         if (textRef.current) {
           textRef.current.style.transform = `translate3d(0, ${
-            relativeScroll * -0.2
-          }px, 0)`;
-          textRef.current.style.webkitTransform = `translate3d(0, ${
             relativeScroll * -0.2
           }px, 0)`;
         }
@@ -262,6 +244,7 @@ const ThirdPage = ({ scrollContainer, id }) => {
       <Train src={train} alt="train" ref={trainRef} />
       <StyledImage src={rail} alt="rail" />
       <Heading ref={textRef}>Wish Jar</Heading>
+  
       <TextContainer ref={paragraphRef}>
         <Paragraph>
           Make a wish and let it float among the stars. Your dreams and hopes 

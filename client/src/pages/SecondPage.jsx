@@ -141,20 +141,27 @@ const PlaneImage = styled.img`
   object-fit: contain;
   transition: transform 0.3s ease;
   cursor: pointer;
+  
+  ${PlaneButton}:active & {
+    transform: scale(0.95);
+  }
 `;
 
 const ExpandableStorySection = styled.div`
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 0;
   left: 0;
   width: 100%;
+  height: 100vh;
   background-color: #0a0a0a;
   overflow: hidden;
-  max-height: ${props => props.$isExpanded ? '100vh' : '0'};
   opacity: ${props => props.$isExpanded ? '1' : '0'};
-  transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-              opacity 0.6s ease-out;
-  z-index: 10;
+  visibility: ${props => props.$isExpanded ? 'visible' : 'hidden'};
+  transform: ${props => props.$isExpanded ? 'translateY(0)' : 'translateY(100%)'};
+  transition: opacity 0.6s ease-out,
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s ${props => props.$isExpanded ? '0s' : '0.6s'};
+  z-index: 9999;
 `;
 
 const StoryScrollContainer = styled.div`
@@ -162,6 +169,8 @@ const StoryScrollContainer = styled.div`
   overflow-y: ${props => props.$isExpanded ? 'auto' : 'hidden'};
   overflow-x: hidden;
   scroll-behavior: smooth;
+  opacity: ${props => props.$isExpanded ? '1' : '0'};
+  transition: opacity 0.8s ease-out 0.5s;
   
   &::-webkit-scrollbar {
     width: 8px;
@@ -185,15 +194,21 @@ const CloseButton = styled.button`
   color: white;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
   cursor: pointer;
-  z-index: 11;
+  z-index: 10000;
   transition: transform 0.3s ease;
+  box-shadow: 0 4px 20px rgba(218, 78, 162, 0.4);
   
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(90deg);
+    background: #c23d8f;
+  }
+  
+  &:active {
+    transform: scale(0.95);
   }
 `;
 
@@ -560,9 +575,11 @@ const SecondPage = (props) => {
 
   const handlePlaneClick = () => {
     setIsStoryExpanded(true);
-    // Small delay to ensure expansion animation starts before scrolling
+    // Ensure story container starts at top
     setTimeout(() => {
-      storyContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      if (storyContainerRef.current) {
+        storyContainerRef.current.scrollTop = 0;
+      }
     }, 100);
   };
 
