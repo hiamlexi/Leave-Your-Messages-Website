@@ -1,8 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import winter from "../assets/winter.gif";
 import summer from "../assets/summer.gif";
 import styled, { keyframes } from "styled-components";
+
+const Section = styled.section`
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -202,28 +210,54 @@ const ImgSection = (
   </FlipWrapper>
 );
 
-const FourthPage = () => {
+const FourthPage = (props) => {
   const headerRef = useRef(null);
   const paragraphRef = useRef(null);
+  const sectionRef = useRef(null);
+  const [hasTyped, setHasTyped] = useState(false);
 
   useEffect(() => {
-    const h1 = headerRef.current;
-    const p = paragraphRef.current;
-    const speed = 50;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // Start typing effect when section is 20% visible and hasn't typed yet
+          if (entry.isIntersecting && !hasTyped) {
+            setHasTyped(true);
+            const h1 = headerRef.current;
+            const p = paragraphRef.current;
+            const speed = 50;
 
-    if (h1 && p) {
-      const delay = h1.innerText.length * speed + speed;
+            if (h1 && p) {
+              const delay = h1.innerText.length * speed + speed;
 
-      typeEffect(h1, speed);
-      setTimeout(() => {
-        p.style.display = "block";
-        typeEffect(p, speed);
-      }, delay);
+              typeEffect(h1, speed);
+              setTimeout(() => {
+                p.style.display = "block";
+                typeEffect(p, speed);
+              }, delay);
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.2, // Trigger when 20% of the section is visible
+        rootMargin: '0px'
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
-  }, []);
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasTyped]);
 
   return (
-    <section>
+    <Section ref={sectionRef} id={props.id}>
       <Container>
         <Left>
           <TypingHeader ref={headerRef}>Sample typing effect.</TypingHeader>
@@ -243,7 +277,7 @@ const FourthPage = () => {
         </Left>
         <Right>{ImgSection}</Right>
       </Container>
-    </section>
+    </Section>
   );
 };
 
