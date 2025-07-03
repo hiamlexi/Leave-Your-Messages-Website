@@ -28,17 +28,34 @@ const Section = styled.section`
 `;
 
 const Tooltip = styled.span`
-  position: absolute;
-  bottom: 110%;
-  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  background: linear-gradient(135deg, #da4ea2 0%, #c23d8f 100%);
   color: white;
-  padding: 6px 10px;
-  border-radius: 5px;
+  padding: 12px 20px;
+  border-radius: 20px;
   font-size: 14px;
+  font-weight: 500;
   white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transform: translate(-50%, -150%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
+  box-shadow: 0 4px 20px rgba(218, 78, 162, 0.4);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #c23d8f;
+  }
 `;
 
 const Msg = styled.h1`
@@ -102,10 +119,6 @@ const PlaneButton = styled.button`
   align-items: center;
   flex-direction: column;
 
-  &:hover ${Tooltip} {
-    opacity: 1;
-  }
-
   &:hover img {
     transform: scale(1.1);
   }
@@ -119,6 +132,7 @@ const PlaneButton = styled.button`
   border: none;
   padding: 0;
   outline: none;
+  cursor: pointer;
 `;
 
 const PlaneImage = styled.img`
@@ -497,6 +511,8 @@ const SecondPage = (props) => {
   const [isStoryExpanded, setIsStoryExpanded] = useState(false);
   const [visibleItems, setVisibleItems] = useState(new Set());
   const [isMobile, setIsMobile] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [showTooltip, setShowTooltip] = useState(false);
   const itemRefs = useRef([]);
   const storyContainerRef = useRef(null);
 
@@ -555,6 +571,18 @@ const SecondPage = (props) => {
     setVisibleItems(new Set());
   };
 
+  const handleMouseMove = (e) => {
+    setTooltipPosition({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseEnter = () => {
+    setShowTooltip(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
+  };
+
   return (
     <>
       <FontStyles />
@@ -571,10 +599,24 @@ const SecondPage = (props) => {
         </Desc>
         <VideoWrapper>
           <StyledVideo src={video} autoPlay muted loop />
-          <PlaneButton onClick={handlePlaneClick}>
-            <Tooltip>Click here to see my journey</Tooltip>
+          <PlaneButton 
+            onClick={handlePlaneClick}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <PlaneImage src={aeroplane} alt="Plane" />
           </PlaneButton>
+          <Tooltip 
+            style={{ 
+              left: tooltipPosition.x + 'px', 
+              top: tooltipPosition.y + 'px',
+              opacity: showTooltip ? 1 : 0,
+              transform: showTooltip ? 'translate(-50%, -150%)' : 'translate(-50%, -140%)'
+            }}
+          >
+            Click here to see my journey
+          </Tooltip>
         </VideoWrapper>
         
         <ExpandableStorySection $isExpanded={isStoryExpanded}>
