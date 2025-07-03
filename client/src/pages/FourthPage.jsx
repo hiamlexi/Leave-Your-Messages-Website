@@ -207,7 +207,6 @@ function typeEffect(element, speed) {
   }, speed);
 }
 
-// === Flipping image section ===
 const ImgSection = (
   <FlipWrapper>
     <FlipCard>
@@ -231,34 +230,39 @@ const FourthPage = (props) => {
   const headerRef = useRef(null);
   const paragraphRef = useRef(null);
   const sectionRef = useRef(null);
-  const [hasTyped, setHasTyped] = useState(false);
+  const hasTypedRef = useRef(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Start typing effect when section is 20% visible and hasn't typed yet
-          if (entry.isIntersecting && !hasTyped) {
-            setHasTyped(true);
+          if (entry.isIntersecting && !hasTypedRef.current) {
+            hasTypedRef.current = true;
+
             const h1 = headerRef.current;
             const p = paragraphRef.current;
-            const speed = 50;
+            const headerSpeed = 50;
+            const paragraphSpeed = Math.floor(headerSpeed / 3);
 
             if (h1 && p) {
-              const delay = h1.innerText.length * speed + speed;
+              const delay = h1.innerText.length * headerSpeed + headerSpeed;
 
-              typeEffect(h1, speed);
+              typeEffect(h1, headerSpeed);
               setTimeout(() => {
                 p.style.display = "block";
-                typeEffect(p, speed);
+                typeEffect(p, paragraphSpeed);
+
+                if (sectionRef.current) {
+                  observer.unobserve(sectionRef.current);
+                }
               }, delay);
             }
           }
         });
       },
       {
-        threshold: 0.2, // Trigger when 20% of the section is visible
-        rootMargin: '0px'
+        threshold: 0.2,
+        rootMargin: "0px",
       }
     );
 
@@ -271,7 +275,7 @@ const FourthPage = (props) => {
         observer.unobserve(sectionRef.current);
       }
     };
-  }, [hasTyped]);
+  }, []);
 
   return (
     <Section ref={sectionRef} id={props.id}>
@@ -280,16 +284,16 @@ const FourthPage = (props) => {
           <TypingHeader ref={headerRef}>Sample typing effect.</TypingHeader>
           <TypingParagraph ref={paragraphRef}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ante
-            arcu, dignissim non risus id, posuere efficitur felis. Vestibulum
-            arcu diam, semper non ipsum quis, dictum ultricies diam. Suspendisse
-            vel luctus sapien. Mauris tristique condimentum velit tincidunt
-            pharetra. Curabitur ut lectus eleifend, malesuada lorem eget,
-            consectetur augue. Nunc scelerisque nisi in lacus eleifend eleifend.
-            Praesent blandit ex at nunc maximus, ut sodales ante auctor. Nunc
-            elementum eros sit amet malesuada facilisis. Morbi eget elit
-            consequat, sodales urna in, lobortis nisi. Morbi dapibus velit eu
-            mattis bibendum. Nulla et nisi eget turpis vulputate suscipit eu nec
-            nunc. Pellentesque ut pulvinar quam.
+            arcu, dignissim non risus id, posuere efficitur felis. Vestibulum arcu
+            diam, semper non ipsum quis, dictum ultricies diam. Suspendisse vel
+            luctus sapien. Mauris tristique condimentum velit tincidunt pharetra.
+            Curabitur ut lectus eleifend, malesuada lorem eget, consectetur augue.
+            Nunc scelerisque nisi in lacus eleifend eleifend. Praesent blandit ex
+            at nunc maximus, ut sodales ante auctor. Nunc elementum eros sit amet
+            malesuada facilisis. Morbi eget elit consequat, sodales urna in,
+            lobortis nisi. Morbi dapibus velit eu mattis bibendum. Nulla et nisi
+            eget turpis vulputate suscipit eu nec nunc. Pellentesque ut pulvinar
+            quam.
           </TypingParagraph>
         </Left>
         <Right>{ImgSection}</Right>
