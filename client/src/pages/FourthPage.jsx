@@ -69,8 +69,9 @@ const rotateBorder = keyframes`
 const FlipWrapper = styled.div`
   width: 80%;
   aspect-ratio: 1 / 1;
-  perspective: 1000px;
+  perspective: 1200px;
   animation: ${float} 3s ease-in-out infinite;
+  cursor: pointer;
 
   @media (max-width: 830px) {
     width: 60%;
@@ -82,7 +83,8 @@ const FlipCard = styled.div`
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.8s ease-in-out;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 
   &:hover {
     transform: rotateY(180deg);
@@ -94,10 +96,13 @@ const Side = styled.div`
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 `;
 
 const Front = styled(Side)`
@@ -123,14 +128,20 @@ const RotatingRing = styled(Ring)`
     border-radius: 50%;
     background: conic-gradient(
       transparent,
-      rgb(219, 102, 255),
-      rgb(255, 146, 220),
-      #ff9966,
+      rgba(219, 102, 255, 0.8),
+      rgba(255, 146, 220, 0.8),
+      rgba(255, 153, 102, 0.8),
       transparent
     );
-    animation: ${rotateBorder} 5s linear infinite;
+    animation: ${rotateBorder} 8s linear infinite;
     z-index: 0;
-    filter: blur(4px);
+    filter: blur(6px);
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+  }
+
+  ${FlipCard}:hover &::before {
+    opacity: 0.6;
   }
 `;
 
@@ -150,6 +161,12 @@ const CircularImg = styled.img`
   border-radius: 50%;
   object-fit: cover;
   display: block;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease;
+
+  ${FlipCard}:hover & {
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  }
 `;
 
 const TypingHeader = styled.h1`
