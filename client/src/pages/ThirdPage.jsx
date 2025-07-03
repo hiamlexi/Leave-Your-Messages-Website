@@ -82,10 +82,48 @@ const Heading = styled.h1`
   }
 `;
 
+const TextContainer = styled.div`
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  max-width: 600px;
+  width: 90%;
+  transition: transform 0.6s ease;
+
+  @media (max-width: 1200px) {
+    left: 55%;
+    max-width: 500px;
+  }
+
+  @media (max-width: 738px) {
+    top: calc(63vh + 60px);
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    padding: 0 20px;
+  }
+`;
+
+const Paragraph = styled.p`
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  text-align: center;
+
+  @media (max-width: 738px) {
+    font-size: 1rem;
+    text-align: center;
+  }
+`;
+
 const ThirdPage = ({ scrollContainer, id }) => {
   const sectionRef = useRef(null);
   const moonRef = useRef(null);
   const textRef = useRef(null);
+  const paragraphRef = useRef(null);
   const trainRef = useRef(null);
 
   const hasEntered = useRef(false);
@@ -130,6 +168,8 @@ const ThirdPage = ({ scrollContainer, id }) => {
           moonRef.current.style.transform = `translateY(100px)`;
         if (textRef.current)
           textRef.current.style.transform = `translateY(-100px)`;
+        if (paragraphRef.current)
+          paragraphRef.current.style.transform = `translateY(-100px)`;
         if (trainRef.current)
           trainRef.current.style.transform = `translateX(-150px)`;
 
@@ -139,6 +179,8 @@ const ThirdPage = ({ scrollContainer, id }) => {
             moonRef.current.style.transform = `translateY(0px)`;
           if (textRef.current)
             textRef.current.style.transform = `translateY(0px)`;
+          if (paragraphRef.current)
+            paragraphRef.current.style.transform = `translateY(0px)`;
           if (trainRef.current)
             trainRef.current.style.transform = `translateX(0px)`;
 
@@ -159,6 +201,11 @@ const ThirdPage = ({ scrollContainer, id }) => {
         }
         if (textRef.current) {
           textRef.current.style.transform = `translateY(${
+            relativeScroll * -0.2
+          }px)`;
+        }
+        if (paragraphRef.current) {
+          paragraphRef.current.style.transform = `translateY(${
             relativeScroll * -0.2
           }px)`;
         }
@@ -184,6 +231,13 @@ const ThirdPage = ({ scrollContainer, id }) => {
       <Train src={train} alt="train" ref={trainRef} />
       <StyledImage src={rail} alt="rail" />
       <Heading ref={textRef}>Wish Jar</Heading>
+      <TextContainer ref={paragraphRef}>
+        <Paragraph>
+          Make a wish and let it float among the stars. Your dreams and hopes 
+          are safe here, waiting to bloom when the time is right. Every wish 
+          tells a story, and every story deserves to be heard.
+        </Paragraph>
+      </TextContainer>
       <StyledImage src={hillLeft} alt="hill left" />
       <StyledImage src={hillRight} alt="hill right" />
     </Section>
