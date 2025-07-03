@@ -54,6 +54,8 @@ const Left = styled.div`
   justify-content: space-between;
   height: 100%;
   padding: 80px 0;
+  overflow: visible;
+  position: relative;
 
   @media (max-width: 768px) {
     flex: 1;
@@ -84,6 +86,8 @@ const NumberSection = styled.div`
   justify-content: center;
   height: 50%;
   order: 1; /* Desktop: numbers first */
+  overflow: visible;
+  position: relative;
   
   @media (max-width: 768px) {
     height: auto;
@@ -186,12 +190,16 @@ const Box = styled.div`
   overflow: visible;
   height: 100px;
   min-width: 200px;
+  padding: 0 50px;
 
   &::before,
   &::after {
     position: absolute;
-    top: -1.5em;
-    width: 100%;
+    top: -1.2em;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    width: auto;
+    white-space: nowrap;
     text-align: center;
     font-size: clamp(2rem, 5vw, 74px);
     background: linear-gradient(90deg, #da4ea2, #fcf0f7, #da4ea2);
@@ -202,20 +210,19 @@ const Box = styled.div`
     animation: shine 3s linear infinite;
     transition: 1s;
     opacity: 0;
-    transform: translateY(100px);
     overflow: visible;
     filter: blur(30px);
   }
 
   &::before {
     content: "Byeeee!";
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
     opacity: 1;
     filter: blur(0);
   }
 
   &:hover::before {
-    transform: translateY(-100px);
+    transform: translateX(-50%) translateY(-100px);
     opacity: 0;
     filter: blur(30px);
   }
@@ -225,7 +232,7 @@ const Box = styled.div`
   }
 
   &:hover::after {
-    transform: translateY(0px);
+    transform: translateX(-50%) translateY(0px);
     opacity: 1;
     filter: blur(0px);
   }
