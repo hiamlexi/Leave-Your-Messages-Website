@@ -84,8 +84,8 @@ const Heading = styled.h1`
 
 const TextContainer = styled.div`
   position: absolute;
-  top: 140px;
-  left: 50%;
+  top: calc(80px + 60px); 
+  left: 70%; 
   transform: translateX(-50%);
   z-index: 2;
   max-width: 600px;
@@ -105,6 +105,7 @@ const TextContainer = styled.div`
     padding: 0 20px;
   }
 `;
+
 
 const Paragraph = styled.p`
   font-size: 1.1rem;
