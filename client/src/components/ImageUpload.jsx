@@ -1,4 +1,3 @@
-// components/ImageUpload.jsx
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { FaCloudUploadAlt, FaTimes } from "react-icons/fa";
