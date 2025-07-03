@@ -37,6 +37,12 @@ const StyledImage = styled.img`
   position: absolute;
   object-fit: cover;
   pointer-events: none;
+  
+  /* Safari optimizations */
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 
   @media (max-width: 738px) {
     width: 100vw;
@@ -196,24 +202,30 @@ const ThirdPage = ({ scrollContainer, id }) => {
 
       if (isInView && !inReverseAnimation.current) {
         if (moonRef.current) {
-          moonRef.current.style.transform = `translateY(${
+          moonRef.current.style.transform = `translate3d(0, ${
             relativeScroll * 0.5
-          }px)`;
+          }px, 0)`;
+          moonRef.current.style.webkitTransform = `translate3d(0, ${
+            relativeScroll * 0.5
+          }px, 0)`;
         }
         if (textRef.current) {
-          textRef.current.style.transform = `translateY(${
+          textRef.current.style.transform = `translate3d(0, ${
             relativeScroll * -0.2
-          }px)`;
+          }px, 0)`;
         }
         if (paragraphRef.current) {
-          paragraphRef.current.style.transform = `translateX(-50%) translateY(${
+          paragraphRef.current.style.transform = `translateY(${
             relativeScroll * -0.2
           }px)`;
         }
         if (trainRef.current) {
-          trainRef.current.style.transform = `translateX(${
+          trainRef.current.style.transform = `translate3d(${
             relativeScroll * 1.5
-          }px)`;
+          }px, 0, 0)`;
+          trainRef.current.style.webkitTransform = `translate3d(${
+            relativeScroll * 1.5
+          }px, 0, 0)`;
         }
       }
     };
@@ -232,6 +244,7 @@ const ThirdPage = ({ scrollContainer, id }) => {
       <Train src={train} alt="train" ref={trainRef} />
       <StyledImage src={rail} alt="rail" />
       <Heading ref={textRef}>Wish Jar</Heading>
+  
       <TextContainer ref={paragraphRef}>
         <Paragraph>
           Make a wish and let it float among the stars. Your dreams and hopes 
