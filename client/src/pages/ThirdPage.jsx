@@ -169,7 +169,7 @@ const ThirdPage = ({ scrollContainer, id }) => {
         if (textRef.current)
           textRef.current.style.transform = `translateY(-100px)`;
         if (paragraphRef.current)
-          paragraphRef.current.style.transform = `translateY(-100px)`;
+          paragraphRef.current.style.transform = `translateX(-50%) translateY(-100px)`;
         if (trainRef.current)
           trainRef.current.style.transform = `translateX(-150px)`;
 
@@ -180,7 +180,7 @@ const ThirdPage = ({ scrollContainer, id }) => {
           if (textRef.current)
             textRef.current.style.transform = `translateY(0px)`;
           if (paragraphRef.current)
-            paragraphRef.current.style.transform = `translateY(0px)`;
+            paragraphRef.current.style.transform = `translateX(-50%) translateY(0px)`;
           if (trainRef.current)
             trainRef.current.style.transform = `translateX(0px)`;
 
@@ -205,7 +205,7 @@ const ThirdPage = ({ scrollContainer, id }) => {
           }px)`;
         }
         if (paragraphRef.current) {
-          paragraphRef.current.style.transform = `translateY(${
+          paragraphRef.current.style.transform = `translateX(-50%) translateY(${
             relativeScroll * -0.2
           }px)`;
         }
