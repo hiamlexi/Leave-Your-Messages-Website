@@ -39,6 +39,8 @@ const MusicWidget = ({ isOpen, onClose }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(80);
+  const [previousVolume, setPreviousVolume] = useState(80);
+  const [isMuted, setIsMuted] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const intervalRef = useRef(null);
 
@@ -93,6 +95,18 @@ const MusicWidget = ({ isOpen, onClose }) => {
     const x = e.clientX - rect.left;
     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
     setVolume(percentage);
+    setIsMuted(false);
+  };
+
+  const handleMuteToggle = () => {
+    if (isMuted) {
+      setVolume(previousVolume);
+      setIsMuted(false);
+    } else {
+      setPreviousVolume(volume);
+      setVolume(0);
+      setIsMuted(true);
+    }
   };
 
   const handleProgressClick = (e) => {
@@ -120,9 +134,13 @@ const MusicWidget = ({ isOpen, onClose }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="card">
-              <CloseButton onClick={onClose}>×</CloseButton>
+              <CloseButton onClick={(e) => {
+                e.stopPropagation();
+                onClose();
+              }}>×</CloseButton>
               <div className="top">
                 <div className="pfp" style={{ backgroundColor: currentSong.color }}>
                   <div className="playing">
@@ -147,14 +165,20 @@ const MusicWidget = ({ isOpen, onClose }) => {
                   fill="currentColor" 
                   viewBox="0 0 24 24" 
                   xmlns="http://www.w3.org/2000/svg"
+                  onClick={handleMuteToggle}
+                  style={{ cursor: 'pointer' }}
                 >
-                  <path fillRule="evenodd" d="M11.26 3.691A1.2 1.2 0 0 1 12 4.8v14.4a1.199 1.199 0 0 1-2.048.848L5.503 15.6H2.4a1.2 1.2 0 0 1-1.2-1.2V9.6a1.2 1.2 0 0 1 1.2-1.2h3.103l4.449-4.448a1.2 1.2 0 0 1 1.308-.26Zm6.328-.176a1.2 1.2 0 0 1 1.697 0A11.967 11.967 0 0 1 22.8 12a11.966 11.966 0 0 1-3.515 8.485 1.2 1.2 0 0 1-1.697-1.697A9.563 9.563 0 0 0 20.4 12a9.565 9.565 0 0 0-2.812-6.788 1.2 1.2 0 0 1 0-1.697Zm-3.394 3.393a1.2 1.2 0 0 1 1.698 0A7.178 7.178 0 0 1 18 12a7.18 7.18 0 0 1-2.108 5.092 1.2 1.2 0 1 1-1.698-1.698A4.782 4.782 0 0 0 15.6 12a4.78 4.78 0 0 0-1.406-3.394 1.2 1.2 0 0 1 0-1.698Z" clipRule="evenodd" />
+                  {isMuted || volume === 0 ? (
+                    <path fillRule="evenodd" d="M11.26 3.691A1.2 1.2 0 0 1 12 4.8v14.4a1.199 1.199 0 0 1-2.048.848L5.503 15.6H2.4a1.2 1.2 0 0 1-1.2-1.2V9.6a1.2 1.2 0 0 1 1.2-1.2h3.103l4.449-4.448a1.2 1.2 0 0 1 1.308-.26ZM15.293 9.293a1 1 0 0 1 1.414 0l1.293 1.293 1.293-1.293a1 1 0 1 1 1.414 1.414L19.414 12l1.293 1.293a1 1 0 0 1-1.414 1.414L18 13.414l-1.293 1.293a1 1 0 0 1-1.414-1.414L16.586 12l-1.293-1.293a1 1 0 0 1 0-1.414Z" clipRule="evenodd" />
+                  ) : (
+                    <path fillRule="evenodd" d="M11.26 3.691A1.2 1.2 0 0 1 12 4.8v14.4a1.199 1.199 0 0 1-2.048.848L5.503 15.6H2.4a1.2 1.2 0 0 1-1.2-1.2V9.6a1.2 1.2 0 0 1 1.2-1.2h3.103l4.449-4.448a1.2 1.2 0 0 1 1.308-.26Zm6.328-.176a1.2 1.2 0 0 1 1.697 0A11.967 11.967 0 0 1 22.8 12a11.966 11.966 0 0 1-3.515 8.485 1.2 1.2 0 0 1-1.697-1.697A9.563 9.563 0 0 0 20.4 12a9.565 9.565 0 0 0-2.812-6.788 1.2 1.2 0 0 1 0-1.697Zm-3.394 3.393a1.2 1.2 0 0 1 1.698 0A7.178 7.178 0 0 1 18 12a7.18 7.18 0 0 1-2.108 5.092 1.2 1.2 0 1 1-1.698-1.698A4.782 4.782 0 0 0 15.6 12a4.78 4.78 0 0 0-1.406-3.394 1.2 1.2 0 0 1 0-1.698Z" clipRule="evenodd" />
+                  )}
                 </svg>
                 <div className="volume" onMouseDown={handleVolumeChange}>
                   <div className="slider">
-                    <div className="green" style={{ width: `${volume}%` }} />
+                    <div className="green" style={{ width: `${isMuted ? 0 : volume}%` }} />
                   </div>
-                  <div className="circle" style={{ left: `${volume}%` }} />
+                  <div className="circle" style={{ left: `${isMuted ? 0 : volume}%` }} />
                 </div>
                 <svg 
                   width={24} 
@@ -237,9 +261,9 @@ const CloseButton = styled.button`
   position: absolute;
   top: 5px;
   right: 5px;
-  background: none;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
-  color: #666;
+  color: #999;
   font-size: 20px;
   cursor: pointer;
   width: 25px;
@@ -249,10 +273,16 @@ const CloseButton = styled.button`
   justify-content: center;
   border-radius: 50%;
   transition: all 0.2s ease;
+  z-index: 10;
   
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #1db954;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transform: scale(1.1);
+  }
+  
+  &:active {
+    transform: scale(0.95);
   }
 `;
 
