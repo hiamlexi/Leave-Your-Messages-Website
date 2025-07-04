@@ -4,7 +4,7 @@ import FirstPage from "./FirstPage";
 import SecondPage from "./SecondPage";
 import FourthPage from "./FourthPage";
 import Navbar from "../components/Navbar";
-import ThirdPage from "./ThirdPage";
+// import ThirdPage from "./ThirdPage";
 import MessagePage from "./MessagePage";
 import PicturePage from "./PicturePage";
 import SafariOptimizations from "../styles/SafariOptimizations";
@@ -219,7 +219,7 @@ const MainPage = () => {
       <Container ref={containerRef}>
         <FirstPage />
         <SecondPage id="my-journey" />
-        {scrollContainer && <ThirdPage id="wish-jar" scrollContainer={scrollContainer} />}
+        {/* {scrollContainer && <ThirdPage id="wish-jar" scrollContainer={scrollContainer} />} */}
         <PicturePage id="memories" />
         <MessagePage id="write-wish" />
         <FourthPage />
