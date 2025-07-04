@@ -1,35 +1,35 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Sample songs data
+// Placeholder songs data - replace the url with your imported MP3 files
 const songs = [
   {
     id: 1,
     title: "Happy Birthday Song",
     artist: "Birthday Wishes",
-    duration: 180, // 3:00 in seconds
+    url: null, 
     color: "#ff6b6b"
   },
   {
     id: 2,
     title: "Celebration Time",
     artist: "Party Vibes",
-    duration: 226, // 3:46 in seconds
+    url: null,
     color: "#4ecdc4"
   },
   {
     id: 3,
     title: "Sweet Memories",
     artist: "Nostalgic Beats",
-    duration: 195, // 3:15 in seconds
+    url: null, 
     color: "#ffe66d"
   },
   {
     id: 4,
     title: "Dancing Lights",
     artist: "Electronic Dreams",
-    duration: 240, // 4:00 in seconds
+    url: null, 
     color: "#a8e6cf"
   }
 ];
@@ -38,39 +38,87 @@ const MusicWidget = ({ isOpen, onClose }) => {
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(80);
   const [previousVolume, setPreviousVolume] = useState(80);
   const [isMuted, setIsMuted] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  const intervalRef = useRef(null);
+  const audioRef = useRef(null);
 
   const currentSong = songs[currentSongIndex];
 
   useEffect(() => {
-    if (isPlaying) {
-      intervalRef.current = setInterval(() => {
-        setCurrentTime(prev => {
-          if (prev >= currentSong.duration) {
-            handleNext();
-            return 0;
-          }
-          return prev + 1;
-        });
-      }, 1000);
-    } else {
-      clearInterval(intervalRef.current);
+    // Create audio element
+    if (!audioRef.current) {
+      audioRef.current = new Audio();
+      audioRef.current.volume = volume / 100;
     }
 
-    return () => clearInterval(intervalRef.current);
-  }, [isPlaying, currentSong.duration]);
+    // Cleanup
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume / 100;
+    }
+  }, [volume, isMuted]);
+
+  useEffect(() => {
+    // Load new song when index changes
+    if (audioRef.current && currentSong.url) {
+      audioRef.current.src = currentSong.url;
+      if (isPlaying) {
+        audioRef.current.play();
+      }
+    }
+  }, [currentSongIndex]);
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+
+    const audio = audioRef.current;
+
+    const updateTime = () => {
+      setCurrentTime(audio.currentTime);
+      setDuration(audio.duration || 0);
+    };
+
+    const handleEnded = () => {
+      handleNext();
+    };
+
+    audio.addEventListener('timeupdate', updateTime);
+    audio.addEventListener('loadedmetadata', updateTime);
+    audio.addEventListener('ended', handleEnded);
+
+    return () => {
+      audio.removeEventListener('timeupdate', updateTime);
+      audio.removeEventListener('loadedmetadata', updateTime);
+      audio.removeEventListener('ended', handleEnded);
+    };
+  }, [currentSongIndex]);
 
   const formatTime = (seconds) => {
+    if (isNaN(seconds)) return '0:00';
     const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
+    const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
   const handlePlayPause = () => {
+    if (!audioRef.current || !currentSong.url) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
     setIsPlaying(!isPlaying);
   };
 
@@ -82,6 +130,7 @@ const MusicWidget = ({ isOpen, onClose }) => {
 
   const handlePrevious = () => {
     if (currentTime > 3) {
+      audioRef.current.currentTime = 0;
       setCurrentTime(0);
     } else {
       setCurrentSongIndex((prev) => (prev - 1 + songs.length) % songs.length);
@@ -110,14 +159,18 @@ const MusicWidget = ({ isOpen, onClose }) => {
   };
 
   const handleProgressClick = (e) => {
+    if (!audioRef.current || !duration) return;
+    
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const percentage = x / rect.width;
-    const newTime = Math.floor(percentage * currentSong.duration);
+    const newTime = percentage * duration;
+    
+    audioRef.current.currentTime = newTime;
     setCurrentTime(newTime);
   };
 
-  const progressPercentage = (currentTime / currentSong.duration) * 100;
+  const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
     <AnimatePresence>
@@ -238,7 +291,7 @@ const MusicWidget = ({ isOpen, onClose }) => {
                 <div className="elapsed" style={{ width: `${progressPercentage}%` }} />
               </div>
               <p className="timetext time_now">{formatTime(currentTime)}</p>
-              <p className="timetext time_full">{formatTime(currentSong.duration)}</p>
+              <p className="timetext time_full">{formatTime(duration)}</p>
             </div>
           </StyledWrapper>
         </>
