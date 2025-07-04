@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -162,6 +163,7 @@ const ExpandableStorySection = styled.div`
               transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
               visibility 0s ${props => props.$isExpanded ? '0s' : '0.6s'};
   z-index: 9999;
+  pointer-events: ${props => props.$isExpanded ? 'auto' : 'none'};
 `;
 
 const StoryScrollContainer = styled.div`
@@ -171,6 +173,8 @@ const StoryScrollContainer = styled.div`
   scroll-behavior: smooth;
   opacity: ${props => props.$isExpanded ? '1' : '0'};
   transition: opacity 0.8s ease-out 0.5s;
+  position: relative;
+  z-index: 1;
   
   &::-webkit-scrollbar {
     width: 8px;
@@ -186,10 +190,15 @@ const StoryScrollContainer = styled.div`
   }
 `;
 
-const CloseButton = styled.button`
+const CloseButtonWrapper = styled.div`
   position: fixed;
   top: 20px;
   right: 20px;
+  z-index: 999999;
+  pointer-events: auto;
+`;
+
+const CloseButton = styled.button`
   background: #da4ea2;
   color: white;
   border: none;
@@ -198,9 +207,12 @@ const CloseButton = styled.button`
   height: 50px;
   font-size: 24px;
   cursor: pointer;
-  z-index: 10000;
   transition: transform 0.3s ease;
   box-shadow: 0 4px 20px rgba(218, 78, 162, 0.4);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   &:hover {
     transform: scale(1.1) rotate(90deg);
@@ -583,7 +595,8 @@ const SecondPage = (props) => {
     }, 100);
   };
 
-  const handleCloseStory = () => {
+  const handleCloseStory = (e) => {
+    e.stopPropagation();
     setIsStoryExpanded(false);
     setVisibleItems(new Set());
   };
@@ -636,10 +649,24 @@ const SecondPage = (props) => {
           </Tooltip>
         </VideoWrapper>
         
+        {/* Close button using React Portal */}
+        {isStoryExpanded && createPortal(
+          <CloseButtonWrapper>
+            <CloseButton 
+              onClick={() => {
+                setIsStoryExpanded(false);
+                setVisibleItems(new Set());
+              }} 
+              type="button"
+              aria-label="Close story"
+            >
+              ×
+            </CloseButton>
+          </CloseButtonWrapper>,
+          document.body
+        )}
+        
         <ExpandableStorySection $isExpanded={isStoryExpanded}>
-          {isStoryExpanded && (
-            <CloseButton onClick={handleCloseStory}>×</CloseButton>
-          )}
           <StoryScrollContainer ref={storyContainerRef} $isExpanded={isStoryExpanded}>
             <SectionTimeline>
               <Container>
