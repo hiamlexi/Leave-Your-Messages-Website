@@ -8,7 +8,8 @@ import Navbar from "../components/Navbar";
 import MessagePage from "./MessagePage";
 import PicturePage from "./PicturePage";
 import SafariOptimizations from "../styles/SafariOptimizations";
-import { FaPlane } from "react-icons/fa";
+import { FaPlane, FaMusic } from "react-icons/fa";
+import MusicWidget from "../components/MusicWidget";
 
 const Container = styled.div`
   height: 100vh;
@@ -81,10 +82,23 @@ const float = keyframes`
   }
 `;
 
-const BackToTopButton = styled.button`
+const FloatingButtonsContainer = styled.div`
   position: fixed;
   bottom: 30px;
   right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 9000;
+
+  @media (max-width: 768px) {
+    bottom: 20px;
+    right: 20px;
+    gap: 12px;
+  }
+`;
+
+const FloatingButton = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -97,28 +111,25 @@ const BackToTopButton = styled.button`
   justify-content: center;
   box-shadow: 0 4px 20px rgba(218, 78, 162, 0.4);
   transition: all 0.3s ease;
-  z-index: 9000;
   animation: ${float} 3s ease-in-out infinite;
+  animation-delay: ${props => props.$delay || '0s'};
   
   &:hover {
     animation-play-state: paused;
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.1);
     box-shadow: 0 6px 25px rgba(218, 78, 162, 0.6);
     background: linear-gradient(135deg, #c23d8f 0%, #a02d7a 100%);
   }
   
   &:active {
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(0.95);
   }
   
   svg {
     font-size: 20px;
-    transform: rotate(-45deg);
   }
   
   @media (max-width: 768px) {
-    bottom: 20px;
-    right: 20px;
     width: 45px;
     height: 45px;
     
@@ -128,9 +139,44 @@ const BackToTopButton = styled.button`
   }
 `;
 
+const BackToTopButton = styled(FloatingButton)`
+  svg {
+    transform: rotate(-45deg);
+  }
+`;
+
+const MusicToggleButton = styled(FloatingButton)`
+  background: ${props => props.$isOpen ? 
+    'linear-gradient(135deg, #1db954 0%, #169c46 100%)' : 
+    'linear-gradient(135deg, #da4ea2 0%, #c23d8f 100%)'};
+  
+  &:hover {
+    background: ${props => props.$isOpen ? 
+      'linear-gradient(135deg, #169c46 0%, #138a3c 100%)' : 
+      'linear-gradient(135deg, #c23d8f 0%, #a02d7a 100%)'};
+  }
+  
+  svg {
+    animation: ${props => props.$isOpen ? 'pulse 1s ease-in-out infinite' : 'none'};
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+`;
+
 const MainPage = () => {
   const containerRef = useRef(null);
   const [scrollContainer, setScrollContainer] = useState(null);
+  const [isMusicOpen, setIsMusicOpen] = useState(false);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -224,9 +270,20 @@ const MainPage = () => {
         <MessagePage id="write-wish" />
         <FourthPage />
       </Container>
-      <BackToTopButton onClick={scrollToTop} aria-label="Back to top">
-        <FaPlane />
-      </BackToTopButton>
+      <FloatingButtonsContainer>
+        <MusicToggleButton 
+          onClick={() => setIsMusicOpen(!isMusicOpen)} 
+          aria-label="Toggle music player"
+          $isOpen={isMusicOpen}
+          $delay="0.5s"
+        >
+          <FaMusic />
+        </MusicToggleButton>
+        <BackToTopButton onClick={scrollToTop} aria-label="Back to top">
+          <FaPlane />
+        </BackToTopButton>
+      </FloatingButtonsContainer>
+      <MusicWidget isOpen={isMusicOpen} onClose={() => setIsMusicOpen(false)} />
     </>
   );
 };
