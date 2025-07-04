@@ -10,6 +10,7 @@ import PicturePage from "./PicturePage";
 import SafariOptimizations from "../styles/SafariOptimizations";
 import { FaPlane, FaMusic } from "react-icons/fa";
 import MusicWidget from "../components/MusicWidget";
+import GlobalFonts from "../styles/GlobalFonts";
 
 const Container = styled.div`
   height: 100vh;
@@ -260,6 +261,7 @@ const MainPage = () => {
 
   return (
     <>
+      <GlobalFonts />
       <SafariOptimizations />
       <Navbar />
       <Container ref={containerRef}>

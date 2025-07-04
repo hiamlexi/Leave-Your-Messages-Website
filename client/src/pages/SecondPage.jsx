@@ -17,7 +17,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
 
 const FontStyles = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Amaranth|Source+Sans+Pro&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 `;
 
 const Section = styled.section`
@@ -62,6 +62,7 @@ const Tooltip = styled.span`
 
 const Msg = styled.h1`
   ${responsiveFontSize('40px', '36px', '32px', '28px', '24px')}
+  font-family: 'Poppins', sans-serif;
   color: white;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -90,10 +91,12 @@ const SubMessage = styled.div`
 const Subtitle = styled.h2`
   color: #da4ea2;
   ${responsiveFontSize('24px', '22px', '20px', '18px', '16px')}
+  font-family: 'Poppins', sans-serif;
   margin: 0;
 `;
 const Desc = styled.p`
   ${responsiveFontSize('24px', '22px', '20px', '18px', '16px')}
+  font-family: 'Poppins', sans-serif;
   color: lightgray;
   text-align: center;
   margin: 10px 0;
@@ -300,6 +303,8 @@ const HeadingWrapper = styled.div`
 
 const Title = styled.h2`
   ${responsiveFontSize('50px', '45px', '40px', '35px', '30px')}
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
   background: linear-gradient(90deg, #da4ea2, #fcf0f7, #da4ea2);
   background-size: 200%;
   background-clip: text;
@@ -321,6 +326,7 @@ const Title = styled.h2`
 
 const ParagraphLarge = styled.p`
   ${responsiveFontSize('20px', '19px', '18px', '17px', '16px')}
+  font-family: 'Poppins', sans-serif;
   letter-spacing: -0.02em;
   line-height: 1.6;
   text-align: center;
@@ -511,7 +517,8 @@ const TimelineContent = styled.div`
 
 const TimelineDate = styled.h3`
   color: white;
-  font-family: 'Amaranth', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
   ${responsiveFontSize('24px', '22px', '20px', '18px', '16px')}
   margin: 0 0 16px 0;
   
@@ -526,7 +533,7 @@ const TimelineDate = styled.h3`
 
 const TimelineDescription = styled.p`
   color: white;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Poppins', sans-serif;
   ${responsiveFontSize('18px', '17px', '16px', '15px', '14px')}
   font-weight: 400;
   line-height: 1.4em;

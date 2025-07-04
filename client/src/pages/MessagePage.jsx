@@ -53,6 +53,7 @@ const FormContainer = styled.div`
   border: 2px solid transparent;
   padding: 24px;
   font-size: 14px;
+  font-family: 'Poppins', sans-serif;
   color: white;
   display: flex;
   flex-direction: column;
@@ -75,6 +76,7 @@ const FormGroup = styled.div`
 
   label {
     color: #717171;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 12px;
   }
@@ -85,7 +87,7 @@ const FormGroup = styled.div`
     padding: 12px 16px;
     border-radius: 8px;
     color: #fff;
-    font-family: inherit;
+    font-family: 'Poppins', sans-serif;
     background-color: transparent;
     border: 1px solid #414141;
     resize: none;
@@ -112,6 +114,7 @@ const SubmitButton = styled.button`
   outline: none;
   border-radius: 25px;
   color: #fff;
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 1px;

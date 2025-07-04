@@ -182,6 +182,7 @@ const TextSection = styled.div`
 
 const Title = styled.h1`
   ${responsiveFontSize('3.5rem', '3rem', '2.5rem', '2rem', '1.75rem')}
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
@@ -190,6 +191,7 @@ const Title = styled.h1`
 
 const Subtitle = styled.h2`
   ${responsiveFontSize('2rem', '1.75rem', '1.5rem', '1.25rem', '1.1rem')}
+  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   color: #da4ea2;
   margin: 0;
@@ -198,6 +200,7 @@ const Subtitle = styled.h2`
 
 const Paragraph = styled.p`
   ${responsiveFontSize('1.2rem', '1.1rem', '1rem', '0.95rem', '0.9rem')}
+  font-family: 'Poppins', sans-serif;
   color: #cccccc;
   line-height: 1.6;
   margin: 0;
@@ -281,6 +284,8 @@ const Box = styled.div`
     width: auto;
     white-space: nowrap;
     text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
     font-size: clamp(2rem, 5vw, 74px);
     background: linear-gradient(90deg, #da4ea2, #fcf0f7, #da4ea2);
     background-size: 200%;
