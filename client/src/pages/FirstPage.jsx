@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Sphere, MeshDistortMaterial } from "@react-three/drei";
 import newyear from "../assets/newyear.webp";
+import { media, responsiveFontSize } from "../styles/breakpoints";
 
 const Container = styled.div`
   width: 100%;
@@ -11,22 +12,32 @@ const Container = styled.div`
   justify-content: space-between;
   height: 100%;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 60px;
 
-  @media (max-width: 1200px) {
+  ${media.xl} {
+    max-width: 1200px;
+    padding: 0 40px;
+  }
+
+  ${media.lg} {
+    max-width: 992px;
     padding: 0 30px;
   }
 
-  @media (max-width: 992px) {
-    padding: 0 20px;
-  }
-
-  @media (max-width: 768px) {
+  ${media.md} {
     width: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 0 20px;
+  }
+
+  ${media.sm} {
     padding: 0 15px;
+  }
+
+  ${media.xs} {
+    padding: 0 10px;
   }
 `;
 
@@ -40,10 +51,18 @@ const CanvasWrapper = styled.div`
   bottom: 0;
   z-index: 0;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     position: relative;
     height: 100%;
     min-height: 300px;
+  }
+
+  ${media.sm} {
+    min-height: 250px;
+  }
+
+  ${media.xs} {
+    min-height: 200px;
   }
 `;
 
@@ -57,11 +76,25 @@ const Left = styled.div`
   overflow: visible;
   position: relative;
 
-  @media (max-width: 768px) {
+  ${media.lg} {
+    padding: 60px 0;
+  }
+
+  ${media.md} {
     flex: 1;
     align-items: center;
     padding: 40px 0;
     gap: 40px;
+  }
+
+  ${media.sm} {
+    padding: 30px 0;
+    gap: 30px;
+  }
+
+  ${media.xs} {
+    padding: 20px 0;
+    gap: 20px;
   }
 `;
 
@@ -73,10 +106,22 @@ const Right = styled.div`
   justify-content: center;
   min-height: 400px;
 
-  @media (max-width: 768px) {
+  ${media.lg} {
+    min-height: 380px;
+  }
+
+  ${media.md} {
     flex: 1;
     width: 100%;
     min-height: 350px;
+  }
+
+  ${media.sm} {
+    min-height: 300px;
+  }
+
+  ${media.xs} {
+    min-height: 250px;
   }
 `;
 
@@ -89,10 +134,18 @@ const NumberSection = styled.div`
   overflow: visible;
   position: relative;
   
-  @media (max-width: 768px) {
+  ${media.md} {
     height: auto;
     padding: 60px 0 40px 0;
     order: 2; /* Mobile: numbers second */
+  }
+
+  ${media.sm} {
+    padding: 40px 0 30px 0;
+  }
+
+  ${media.xs} {
+    padding: 30px 0 20px 0;
   }
 `;
 
@@ -104,16 +157,32 @@ const TextSection = styled.div`
   padding: 40px 40px 0 40px;
   order: 2; /* Desktop: text second */
   
-  @media (max-width: 768px) {
+  ${media.lg} {
+    padding: 30px 30px 0 30px;
+    gap: 18px;
+  }
+
+  ${media.md} {
     height: auto;
     padding: 40px 20px 0 20px;
     text-align: center;
     order: 1; /* Mobile: text first */
   }
+
+  ${media.sm} {
+    padding: 30px 15px 0 15px;
+    gap: 15px;
+  }
+
+  ${media.xs} {
+    padding: 20px 10px 0 10px;
+    gap: 12px;
+  }
 `;
 
 const Title = styled.h1`
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  ${responsiveFontSize('3.5rem', '3rem', '2.5rem', '2rem', '1.75rem')}
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
@@ -121,7 +190,8 @@ const Title = styled.h1`
 `;
 
 const Subtitle = styled.h2`
-  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  ${responsiveFontSize('2rem', '1.75rem', '1.5rem', '1.25rem', '1.1rem')}
+  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   color: #da4ea2;
   margin: 0;
@@ -129,13 +199,14 @@ const Subtitle = styled.h2`
 `;
 
 const Paragraph = styled.p`
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  ${responsiveFontSize('1.2rem', '1.1rem', '1rem', '0.95rem', '0.9rem')}
+  font-family: 'Poppins', sans-serif;
   color: #cccccc;
   line-height: 1.6;
   margin: 0;
   max-width: 500px;
   
-  @media (max-width: 768px) {
+  ${media.md} {
     max-width: 100%;
   }
 `;
@@ -153,22 +224,34 @@ const Img = styled.img`
   animation: animate 2s infinite ease alternate;
   z-index: 1;
 
-  @media (max-width: 1200px) {
+  ${media.xl} {
     width: 85%;
     max-width: 600px;
-    max-height: 450px;
+    max-height: 500px;
   }
 
-  @media (max-width: 992px) {
+  ${media.lg} {
     width: 80%;
     max-width: 500px;
     max-height: 400px;
   }
 
-  @media (max-width: 768px) {
+  ${media.md} {
     width: 70%;
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 350px;
+    max-height: 350px;
+  }
+
+  ${media.sm} {
+    width: 65%;
+    max-width: 280px;
+    max-height: 280px;
+  }
+
+  ${media.xs} {
+    width: 60%;
+    max-width: 220px;
+    max-height: 220px;
   }
 
   @keyframes animate {
@@ -201,6 +284,8 @@ const Box = styled.div`
     width: auto;
     white-space: nowrap;
     text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
     font-size: clamp(2rem, 5vw, 74px);
     background: linear-gradient(90deg, #da4ea2, #fcf0f7, #da4ea2);
     background-size: 200%;
@@ -249,9 +334,29 @@ const Box = styled.div`
 
 const Span = styled.span`
   color: #fff;
-  font-size: clamp(3rem, 10vw, 10em);
   font-weight: bold;
   filter: blur(1px);
+  font-size: 10em;
+
+  ${media.xl} {
+    font-size: 8em;
+  }
+
+  ${media.lg} {
+    font-size: 6em;
+  }
+
+  ${media.md} {
+    font-size: 5em;
+  }
+
+  ${media.sm} {
+    font-size: 4em;
+  }
+
+  ${media.xs} {
+    font-size: 3em;
+  }
 `;
 
 const DigitWrapper = styled.div`
@@ -296,10 +401,12 @@ const FirstPage = () => {
   const getSphereScale = () => {
     if (typeof window !== 'undefined') {
       const width = window.innerWidth;
-      if (width < 768) return 1.8;
-      if (width < 992) return 2.0;
-      if (width < 1200) return 2.2;
-      return 2.4;
+      if (width < 480) return 1.5;   // xs
+      if (width < 640) return 1.7;   // sm
+      if (width < 768) return 1.8;   // md
+      if (width < 1024) return 2.0;  // lg
+      if (width < 1280) return 2.2;  // xl
+      return 2.4;                     // xxl
     }
     return 2.4;
   };

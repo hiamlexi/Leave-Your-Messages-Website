@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { media, responsiveFontSize } from "../styles/breakpoints";
 
 import video from "../assets/sky.mp4";
 import aeroplane from "../assets/plane.png";
@@ -16,7 +17,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
 
 const FontStyles = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Amaranth|Source+Sans+Pro&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 `;
 
 const Section = styled.section`
@@ -60,32 +61,56 @@ const Tooltip = styled.span`
 `;
 
 const Msg = styled.h1`
-  font-size: 40px;
+  ${responsiveFontSize('40px', '36px', '32px', '28px', '24px')}
+  font-family: 'Poppins', sans-serif;
   color: white;
   transition: all 0.3s ease;
   text-decoration: none;
+  text-align: center;
 `;
 
 const SubMessage = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  text-align: center;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 20px;
-    text-align: center;
+    flex-direction: column;
+  }
+
+  ${media.sm} {
+    padding: 15px;
+  }
+
+  ${media.xs} {
+    padding: 10px;
   }
 `;
 const Subtitle = styled.h2`
   color: #da4ea2;
+  ${responsiveFontSize('24px', '22px', '20px', '18px', '16px')}
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
 `;
 const Desc = styled.p`
-  font-size: 24px;
+  ${responsiveFontSize('24px', '22px', '20px', '18px', '16px')}
+  font-family: 'Poppins', sans-serif;
   color: lightgray;
+  text-align: center;
+  margin: 10px 0;
 
-  @media (max-width: 768px) {
+  ${media.md} {
     padding: 20px;
-    text-align: center;
+  }
+
+  ${media.sm} {
+    padding: 15px;
+  }
+
+  ${media.xs} {
+    padding: 10px;
   }
 `;
 const VideoWrapper = styled.div`
@@ -95,6 +120,28 @@ const VideoWrapper = styled.div`
   aspect-ratio: 2.5 / 1;
   border-radius: 60px;
   z-index: 0;
+
+  ${media.lg} {
+    width: 85%;
+    max-width: 800px;
+  }
+
+  ${media.md} {
+    width: 80%;
+    max-width: 600px;
+    aspect-ratio: 2 / 1;
+  }
+
+  ${media.sm} {
+    width: 95%;
+    border-radius: 40px;
+  }
+
+  ${media.xs} {
+    width: 98%;
+    border-radius: 30px;
+    aspect-ratio: 1.5 / 1;
+  }
 `;
 const StyledVideo = styled.video`
   position: absolute;
@@ -255,17 +302,17 @@ const HeadingWrapper = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 50px;
+  ${responsiveFontSize('50px', '45px', '40px', '35px', '30px')}
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
   background: linear-gradient(90deg, #da4ea2, #fcf0f7, #da4ea2);
   background-size: 200%;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 3s linear infinite;
-
-  @media (max-width: 767px) {
-    font-size: 40px;
-  }
+  text-align: center;
+  margin: 20px 0;
 
   @keyframes shine {
     0% {
@@ -278,12 +325,11 @@ const Title = styled.h2`
 `;
 
 const ParagraphLarge = styled.p`
-  font-size: 20px;
+  ${responsiveFontSize('20px', '19px', '18px', '17px', '16px')}
+  font-family: 'Poppins', sans-serif;
   letter-spacing: -0.02em;
-
-  @media (max-width: 767px) {
-    font-size: 18px;
-  }
+  line-height: 1.6;
+  text-align: center;
 `;
 
 const TimelineComponent = styled.ul`
@@ -471,25 +517,35 @@ const TimelineContent = styled.div`
 
 const TimelineDate = styled.h3`
   color: white;
-  font-family: 'Amaranth', sans-serif;
-  font-size: 24px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  ${responsiveFontSize('24px', '22px', '20px', '18px', '16px')}
   margin: 0 0 16px 0;
   
-  @media (max-width: 768px) {
-    font-size: 20px;
+  ${media.sm} {
+    margin: 0 0 12px 0;
+  }
+
+  ${media.xs} {
+    margin: 0 0 8px 0;
   }
 `;
 
 const TimelineDescription = styled.p`
   color: white;
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 18px;
+  font-family: 'Poppins', sans-serif;
+  ${responsiveFontSize('18px', '17px', '16px', '15px', '14px')}
   font-weight: 400;
   line-height: 1.4em;
   margin: 16px 0;
   
-  @media (max-width: 768px) {
-    font-size: 16px;
+  ${media.sm} {
+    margin: 12px 0;
+    line-height: 1.5em;
+  }
+
+  ${media.xs} {
+    margin: 8px 0;
   }
 `;
 
@@ -547,7 +603,7 @@ const SecondPage = (props) => {
     Aos.init({ duration: 2000 });
     
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 738);
+      setIsMobile(window.innerWidth <= 768);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
