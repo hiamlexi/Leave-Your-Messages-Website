@@ -281,19 +281,16 @@ const FourthPage = (props) => {
     <Section ref={sectionRef} id={props.id}>
       <Container>
         <Left>
-          <TypingHeader ref={headerRef}>Sample typing effect.</TypingHeader>
+          <TypingHeader ref={headerRef}>Welcome to Our Journey</TypingHeader>
           <TypingParagraph ref={paragraphRef}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ante
-            arcu, dignissim non risus id, posuere efficitur felis. Vestibulum arcu
-            diam, semper non ipsum quis, dictum ultricies diam. Suspendisse vel
-            luctus sapien. Mauris tristique condimentum velit tincidunt pharetra.
-            Curabitur ut lectus eleifend, malesuada lorem eget, consectetur augue.
-            Nunc scelerisque nisi in lacus eleifend eleifend. Praesent blandit ex
-            at nunc maximus, ut sodales ante auctor. Nunc elementum eros sit amet
-            malesuada facilisis. Morbi eget elit consequat, sodales urna in,
-            lobortis nisi. Morbi dapibus velit eu mattis bibendum. Nulla et nisi
-            eget turpis vulputate suscipit eu nec nunc. Pellentesque ut pulvinar
-            quam.
+            Every season brings its own magic, just like every message carries its
+            own story. This interactive space celebrates the beauty of transitions -
+            from winter's quiet reflection to summer's vibrant energy. Hover over
+            the image to experience the transformation, and remember that your words
+            have the power to create lasting connections. Whether you're sharing
+            memories, expressing gratitude, or simply saying hello, your message
+            matters. Take a moment to explore, reflect, and leave your mark on this
+            digital canvas where stories come to life and connections are made.
           </TypingParagraph>
         </Left>
         <Right>{ImgSection}</Right>
