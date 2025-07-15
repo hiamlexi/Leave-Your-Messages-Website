@@ -35,6 +35,14 @@ const Container = styled.div`
   -webkit-transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   -webkit-perspective: 1000px;
+  
+  /* Disable scroll-snap on mobile */
+  @media (max-width: 738px) {
+    scroll-snap-type: none;
+    -webkit-scroll-snap-type: none;
+    height: auto;
+    overflow-y: visible;
+  }
 
   /* Custom scrollbar for Webkit browsers */
   &::-webkit-scrollbar {
@@ -238,25 +246,32 @@ const MainPage = () => {
   const scrollToTop = () => {
     console.log('Scroll to top clicked');
     
-    // Try multiple methods to ensure scrolling works
-    if (containerRef.current) {
-      console.log('Container found:', containerRef.current);
-      
-      // Method 1: Direct scrollTop
-      containerRef.current.scrollTop = 0;
-      
-      // Method 2: scrollTo as backup
-      setTimeout(() => {
-        containerRef.current.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      }, 10);
-    }
+    // Check if mobile
+    const isMobile = window.innerWidth <= 738;
     
-    // Method 3: Try document.documentElement as fallback
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    if (isMobile) {
+      // On mobile, scroll the window
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      // On desktop, scroll the container
+      if (containerRef.current) {
+        console.log('Container found:', containerRef.current);
+        
+        // Method 1: Direct scrollTop
+        containerRef.current.scrollTop = 0;
+        
+        // Method 2: scrollTo as backup
+        setTimeout(() => {
+          containerRef.current.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }, 10);
+      }
+    }
   };
 
   return (

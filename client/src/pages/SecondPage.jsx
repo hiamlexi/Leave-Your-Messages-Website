@@ -651,11 +651,6 @@ const SecondPage = (props) => {
     }, 100);
   };
 
-  const handleCloseStory = (e) => {
-    e.stopPropagation();
-    setIsStoryExpanded(false);
-    setVisibleItems(new Set());
-  };
 
   const handleMouseMove = (e) => {
     setTooltipPosition({ x: e.clientX, y: e.clientY });
