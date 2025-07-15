@@ -184,13 +184,10 @@ const MusicToggleButton = styled(FloatingButton)`
 
 const MainPage = () => {
   const containerRef = useRef(null);
-  const [scrollContainer, setScrollContainer] = useState(null);
   const [isMusicOpen, setIsMusicOpen] = useState(false);
 
   useEffect(() => {
     if (containerRef.current) {
-      setScrollContainer(containerRef.current);
-      
       // Safari-specific smooth scroll enhancement
       const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
       
@@ -282,7 +279,6 @@ const MainPage = () => {
       <Container ref={containerRef}>
         <FirstPage />
         <SecondPage id="my-journey" />
-        {/* {scrollContainer && <ThirdPage id="wish-jar" scrollContainer={scrollContainer} />} */}
         <PicturePage id="memories" />
         <MessagePage id="write-wish" />
         <FourthPage />

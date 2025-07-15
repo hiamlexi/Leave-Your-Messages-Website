@@ -29,7 +29,6 @@ const Links = () => {
   const navigate = useNavigate();
   const items = [
     { name: "My Journey", id: "my-journey" },
-    { name: "Wish Jar", id: "wish-jar" },
     { name: "Memories", id: "memories" },
     { name: "Write Wish", id: "write-wish" }
   ];
