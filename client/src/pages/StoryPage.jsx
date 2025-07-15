@@ -28,16 +28,6 @@ const SectionHeading = styled.section`
   background-color: #0a0a0a;
 `;
 
-<div style={{ height: '70vh', width: '100%' }}>
-  <Canvas camera={{ position: [0, 1, 5], fov: 45 }}>
-    <ambientLight intensity={0.5} />
-    <directionalLight position={[2, 2, 2]} intensity={1} />
-    <PCModel scale={0.5} />
-    <OrbitControls enableZoom={false} />
-    <Environment preset="sunset" />
-  </Canvas>
-</div>
-
 
 const SectionTimeline = styled.section`
   background-color: #0a0a0a;
@@ -415,20 +405,22 @@ const Timeline = () => {
                 As 26 slips away, I just want to carry forward a little more softness, a little more courage, and a little less fear.
               </ParagraphLarge>
             </HeadingWrapper>
-            {/* --- 3D MODEL SECTION --- */}
-            <div style={{ height: '100vh', width: '100%' }}>
-              <Canvas camera={{ position: [0, 1.5, 6], fov: 40 }}>
-                <ambientLight intensity={0.5} />
-                <directionalLight position={[2, 2, 2]} />
-                <PCModel
-                  scale={isMobile ? 1 : 1.5}
-                  rotation={[0, -Math.PI / 2, 0]}
-                  position={isMobile ? [0.3, -0.2, 0] : [0.5, 0, 0]}
-                />
-                <OrbitControls enableZoom={false} />
-                <Environment preset="sunset" />
-              </Canvas>
-            </div>
+            {/* --- 3D MODEL SECTION - Hidden on mobile --- */}
+            {!isMobile && (
+              <div style={{ height: '100vh', width: '100%' }}>
+                <Canvas camera={{ position: [0, 1.5, 6], fov: 40 }}>
+                  <ambientLight intensity={0.5} />
+                  <directionalLight position={[2, 2, 2]} />
+                  <PCModel
+                    scale={1.5}
+                    rotation={[0, -Math.PI / 2, 0]}
+                    position={[0.5, 0, 0]}
+                  />
+                  <OrbitControls enableZoom={false} />
+                  <Environment preset="sunset" />
+                </Canvas>
+              </div>
+            )}
           </VerticalPadding>
         </Container>
       </SectionHeading>
